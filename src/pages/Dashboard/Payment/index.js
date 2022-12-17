@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
 
 export default function Payment() {
-  const [tapped, setTapped] = useState(false);
   const [activeIndex, setIndex] = useState('');
+  const [activeIndexTwo, setIndexTwo] = useState('');
+  const [type, setType] = useState(false);
 
   return (
     <PaymentSection>
@@ -18,7 +19,7 @@ export default function Payment() {
             isTapped={activeIndex === 0}
             onClick={() => {
               activeIndex !== 0 ? setIndex(0) : setIndex('');
-              setTapped(!tapped);
+              setType(!type);
             }}
           />
           <BoxContainer
@@ -27,7 +28,29 @@ export default function Payment() {
             isTapped={activeIndex === 1}
             onClick={() => {
               activeIndex !== 1 ? setIndex(1) : setIndex('');
-              setTapped(!tapped);
+              setType(false);
+            }}
+          />
+        </TicketTypeBoxSection>
+      </TicketTypeSection>
+
+      <TicketTypeSection style={{ marginTop: '30px', display: type === true ? 'block' : 'none' }}>
+        <p>Ótimo! Agora escolha sua modalidade de hospedagem</p>
+        <TicketTypeBoxSection style={{ marginTop: '30px' }}>
+          <BoxContainer
+            description={'Sem Hotel'}
+            value="+ R$ 0"
+            isTapped={activeIndexTwo === 0}
+            onClick={() => {
+              activeIndexTwo !== 0 ? setIndexTwo(0) : setIndexTwo('');
+            }}
+          />
+          <BoxContainer
+            description={'Com Hotel'}
+            value="+ R$ 350"
+            isTapped={activeIndexTwo === 1}
+            onClick={() => {
+              activeIndexTwo !== 1 ? setIndexTwo(1) : setIndexTwo('');
             }}
           />
         </TicketTypeBoxSection>
