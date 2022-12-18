@@ -59,21 +59,29 @@ export default function Payment() {
           />
         ))}
       </DisplaySection>
-      <DisplaySection title="Fechado! O total ficou em R$100. Agora é só confirmar" isActive={modalityIndex === 1}>
-        <FlatButton
-          description="Reservar ingresso"
-          onClick={async() => {
-            const onlineTicketTypeId = ticketTypes.filter((ticket) => ticket.isRemote === true);
-            try {
-              await createTicket(onlineTicketTypeId[0].id);
-              toast('Ticket reservado com sucesso!');
-              navigate('/dashboard/hotel');
-            } catch (error) {
-              toast('Não foi possível reservar seu ticket, favor tente novamente');
-            }
-          }}
-        />
-      </DisplaySection>
+      {modalityOpt
+        .filter((data) => data.isRemote === true)
+        .map((data, index) => (
+          <DisplaySection
+            key={index}
+            title={`Fechado! O total ficou em R$ ${data.price}. Agora é só confirmar`}
+            isActive={modalityIndex === 1}
+          >
+            <FlatButton
+              description="Reservar ingresso"
+              onClick={async() => {
+                const onlineTicketTypeId = ticketTypes.filter((ticket) => ticket.isRemote === true);
+                try {
+                  await createTicket(onlineTicketTypeId[0].id);
+                  toast('Ticket reservado com sucesso!');
+                  navigate('/dashboard/hotel');
+                } catch (error) {
+                  toast('Não foi possível reservar seu ticket, favor tente novamente');
+                }
+              }}
+            />
+          </DisplaySection>
+        ))}
     </PaymentSection>
   );
 }
