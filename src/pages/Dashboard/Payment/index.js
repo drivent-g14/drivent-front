@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
 
 export default function Payment() {
-  const [activeIndex, setIndex] = useState('');
-  const [activeIndexTwo, setIndexTwo] = useState('');
-  const [type, setType] = useState(false);
+  const [modalityIndex, setModalityIndex] = useState('');
+  const [hospitalityIndex, setHospitalityIndex] = useState('');
 
   return (
     <PaymentSection>
@@ -16,45 +15,43 @@ export default function Payment() {
           <BoxContainer
             description="Presencial"
             value="R$ 250"
-            isTapped={activeIndex === 0}
+            isTapped={modalityIndex === 0}
             onClick={() => {
-              activeIndex !== 0 ? setIndex(0) : setIndex('');
-              setType(!type);
+              modalityIndex !== 0 ? setModalityIndex(0) : setModalityIndex('');
             }}
           />
           <BoxContainer
             description="Online"
             value="R$ 100"
-            isTapped={activeIndex === 1}
+            isTapped={modalityIndex === 1}
             onClick={() => {
-              activeIndex !== 1 ? setIndex(1) : setIndex('');
-              setType(false);
+              modalityIndex !== 1 ? setModalityIndex(1) : setModalityIndex('');
             }}
           />
         </TicketTypeBoxSection>
       </TicketTypeSection>
 
-      <TicketTypeSection style={{ marginTop: '30px', display: type === true ? 'block' : 'none' }}>
+      <HotelReservationSection hospitality={modalityIndex}>
         <p>Ótimo! Agora escolha sua modalidade de hospedagem</p>
-        <TicketTypeBoxSection style={{ marginTop: '30px' }}>
+        <HotelReservationBoxSection>
           <BoxContainer
             description={'Sem Hotel'}
             value="+ R$ 0"
-            isTapped={activeIndexTwo === 0}
+            isTapped={hospitalityIndex === 0}
             onClick={() => {
-              activeIndexTwo !== 0 ? setIndexTwo(0) : setIndexTwo('');
+              hospitalityIndex !== 0 ? setHospitalityIndex(0) : setHospitalityIndex('');
             }}
           />
           <BoxContainer
             description={'Com Hotel'}
             value="+ R$ 350"
-            isTapped={activeIndexTwo === 1}
+            isTapped={hospitalityIndex === 1}
             onClick={() => {
-              activeIndexTwo !== 1 ? setIndexTwo(1) : setIndexTwo('');
+              hospitalityIndex !== 1 ? setHospitalityIndex(1) : setHospitalityIndex('');
             }}
           />
-        </TicketTypeBoxSection>
-      </TicketTypeSection>
+        </HotelReservationBoxSection>
+      </HotelReservationSection>
     </PaymentSection>
   );
 }
@@ -81,5 +78,22 @@ const TicketTypeBoxSection = styled.div`
   display: flex;
   flex-direction: row;
   column-gap: 24px;
+  row-gap: 24px;
+  align-items: center;
+`;
+const HotelReservationSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  display: ${(props) => (props.hospitality === 0 ? '' : 'none')};
+  row-gap: 16px;
+  font-size: 18px;
+  color: #9e9e9e;
+`;
+
+const HotelReservationBoxSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 24px;
+  row-gap: 24px;
   align-items: center;
 `;
