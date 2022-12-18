@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
 import FlatButton from '../../../components/Dashboard/Containers/FlatButton';
@@ -13,6 +15,7 @@ export default function Payment() {
   const [atEventOpt, setAtEventOpt] = useState([]);
   const { ticketTypes } = useTicketType();
   const { createTicket } = useTicket();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ticketTypes) {
@@ -59,9 +62,15 @@ export default function Payment() {
       <DisplaySection title="Fechado! O total ficou em R$100. Agora é só confirmar" isActive={modalityIndex === 1}>
         <FlatButton
           description="Reservar ingresso"
-          onClick={() => {
+          onClick={async() => {
             const onlineTicketTypeId = ticketTypes.filter((ticket) => ticket.isRemote === true);
-            createTicket(onlineTicketTypeId[0].id);
+            try {
+              await createTicket(onlineTicketTypeId[0].id);
+              toast('Ticket reservado com sucesso!');
+              navigate('/dashboard/hotel');
+            } catch (error) {
+              toast('Não foi possível reservar seu ticket, favor tente novamente');
+            }
           }}
         />
       </DisplaySection>
