@@ -46,13 +46,13 @@ export default function Payment() {
           onClick={() => checkHospitalityIndex(1)}
         />
       </DisplaySection>
+
+      <DisplaySection title="Fechado! O total ficou em R$100. Agora é só confirmar" isActive={modalityIndex === 1}>
+        <BoxContainer width="180px" height="42px" description="Reservar ingresso" />
+      </DisplaySection>
     </PaymentSection>
   );
 }
-
-const OnlineText = styled.div`
-  display: ${(props) => (props.isOnline === 1 ? '' : 'none')};
-`;
 
 const PaymentSection = styled.div`
   display: flex;

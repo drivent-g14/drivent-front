@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+//[title]: Espera uma string que seria o titulo do componente;
+//[isActive] - boolean: Diz se a section deve ser mostrada ou não Default true;
+//[children] (Deve ser um BoxContainer): Aceita qualquer componente como filho;
+
 export default function DisplaySection({ title, isActive = true, children }) {
   return (
     <DisplayStyle isActive={isActive}>

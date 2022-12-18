@@ -5,7 +5,7 @@ import styled from 'styled-components';
 //[width]: Define a largura do container;
 //[tapped]: Caso seja true, a cor do background muda (usar com setState). Default false;
 //[description] - String: Descrição a ser mostrada no container;
-//[value] - String: Valor a ser mostrado no container(geralmente em R$);
+//[value]- String opcional: Valor a ser mostrado no container(geralmente em R$);
 //[...props]: Demais parametros que o componente permita, Ex: onClick. Porém deve ser utilizado na
 //na construção do componente
 
@@ -20,7 +20,7 @@ export default function BoxContainer({ height, width, description, value, isTapp
     >
       <DescriptionDiv>
         <Description>{description}</Description>
-        <Value>{value}</Value>
+        <Value value={value}>{value}</Value>
       </DescriptionDiv>
     </MuiContainer>
   );
@@ -54,5 +54,6 @@ const Description = styled.div`
 
 const Value = styled.div`
   color: #9e9e9e;
+  display: ${(props) => (props.value ? '' : 'none')};
   font-weight: 300;
 `;
