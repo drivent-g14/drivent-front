@@ -1,12 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
 import FlatButton from '../../../components/Dashboard/Containers/FlatButton';
 import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
+import useTicketType from '../../../hooks/api/useTicket';
 
 export default function Payment() {
   const [modalityIndex, setModalityIndex] = useState('');
   const [hospitalityIndex, setHospitalityIndex] = useState('');
+  const [modalityOpt, setModalityOpt] = useState([]);
+  const [atEventOpt, setAtEventOpt] = useState([]);
+  const { ticketTypes } = useTicketType();
+
+  useEffect(() => {
+    if (ticketTypes) {
+      ticketTypes.map((ticket) => {
+        let ticketType = ticket;
+        if (ticket.name.includes('mask')) return setModalityOpt((state) => [...state, ticketType]);
+        return setAtEventOpt((state) => [...state, ticketType]);
+      });
+    }
+  }, [ticketTypes]);
 
   function checkModalityIndex(index) {
     modalityIndex !== index ? setModalityIndex(index) : setModalityIndex('');
@@ -19,37 +33,28 @@ export default function Payment() {
     <PaymentSection>
       <TitleSection>Ingresso e pagamento</TitleSection>
       <DisplaySection title={'Primeiro, escolha sua modalidade de ingresso'}>
-        <BoxContainer
-          description="Presencial"
-          value="R$ 250"
-          isTapped={modalityIndex === 0}
-          onClick={() => checkModalityIndex(0)}
-        />
-        <BoxContainer
-          description="Online"
-          value="R$ 100"
-          isTapped={modalityIndex === 1}
-          onClick={() => checkModalityIndex(1)}
-        />
+        {modalityOpt.map((data, index) => (
+          <BoxContainer
+            key={index}
+            description={data.name.split('-')[0]}
+            value={`R$ ${data.price}`}
+            isTapped={modalityIndex === index}
+            onClick={() => checkModalityIndex(index)}
+          />
+        ))}
       </DisplaySection>
-
       <DisplaySection title="Ótimo! Agora escolha sua modalidade de hospedagem" isActive={modalityIndex === 0}>
-        <BoxContainer
-          description={'Sem Hotel'}
-          value="+ R$ 0"
-          isTapped={hospitalityIndex === 0}
-          onClick={() => checkHospitalityIndex(0)}
-        />
-        <BoxContainer
-          description={'Com Hotel'}
-          value="+ R$ 350"
-          isTapped={hospitalityIndex === 1}
-          onClick={() => checkHospitalityIndex(1)}
-        />
+        {atEventOpt.map((data, index) => (
+          <BoxContainer
+            description={data.name.split('-')[0]}
+            value={data.includesHotel ? `+ R$ ${data.price}` : '+ R$ 0'}
+            isTapped={hospitalityIndex === index}
+            onClick={() => checkHospitalityIndex(index)}
+          />
+        ))}
       </DisplaySection>
-
       <DisplaySection title="Fechado! O total ficou em R$100. Agora é só confirmar" isActive={modalityIndex === 1}>
-        <FlatButton description="Reservar ingresso" />
+        <FlatButton description="Reservar ingresso" onClick={() => {}} />
       </DisplaySection>
     </PaymentSection>
   );
