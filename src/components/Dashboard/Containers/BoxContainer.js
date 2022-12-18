@@ -14,7 +14,7 @@ export default function BoxContainer({ height, width, description, value, isTapp
     <MuiContainer
       height={height}
       width={width}
-      tapped={isTapped ?? false}
+      tapped={isTapped ? 1 : 0}
       sx={{ height: height ?? '150px', width: width ?? '150px' }}
       {...props}
     >

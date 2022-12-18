@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
 import FlatButton from '../../../components/Dashboard/Containers/FlatButton';
 import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
-import useTicketType from '../../../hooks/api/useTicket';
+import useTicket from '../../../hooks/api/useTicket';
+import useTicketType from '../../../hooks/api/useTicketType';
 
 export default function Payment() {
   const [modalityIndex, setModalityIndex] = useState('');
@@ -11,6 +12,7 @@ export default function Payment() {
   const [modalityOpt, setModalityOpt] = useState([]);
   const [atEventOpt, setAtEventOpt] = useState([]);
   const { ticketTypes } = useTicketType();
+  const { createTicket } = useTicket();
 
   useEffect(() => {
     if (ticketTypes) {
@@ -46,6 +48,7 @@ export default function Payment() {
       <DisplaySection title="Ótimo! Agora escolha sua modalidade de hospedagem" isActive={modalityIndex === 0}>
         {atEventOpt.map((data, index) => (
           <BoxContainer
+            key={index}
             description={data.name.split('-')[0]}
             value={data.includesHotel ? `+ R$ ${data.price}` : '+ R$ 0'}
             isTapped={hospitalityIndex === index}
@@ -54,7 +57,13 @@ export default function Payment() {
         ))}
       </DisplaySection>
       <DisplaySection title="Fechado! O total ficou em R$100. Agora é só confirmar" isActive={modalityIndex === 1}>
-        <FlatButton description="Reservar ingresso" onClick={() => {}} />
+        <FlatButton
+          description="Reservar ingresso"
+          onClick={() => {
+            const onlineTicketTypeId = ticketTypes.filter((ticket) => ticket.isRemote === true);
+            createTicket(onlineTicketTypeId[0].id);
+          }}
+        />
       </DisplaySection>
     </PaymentSection>
   );
