@@ -64,13 +64,13 @@ export default function Payment() {
           <BoxContainer
             key={index}
             description={data.name.split('-')[0]}
-            value={data.includesHotel ? `+ R$ ${data.price}` : '+ R$ 0'}
+            value={`+ R$ ${data.price}`}
             isTapped={hospitalityIndex === index}
             onClick={() => checkHospitalityIndex(index, data)}
           />
         ))}
       </DisplaySection>
-      <OnlineReserveButton
+      <ReserveButton
         modalityIndex={modalityIndex}
         ticketType={ticketType}
         ticketTypes={ticketTypes}
@@ -80,19 +80,22 @@ export default function Payment() {
   );
 }
 
-function OnlineReserveButton({ ticketType, modalityIndex = '', hospitalityIndex = '', ticketTypes = {} }) {
+function ReserveButton({ ticketType, modalityIndex = '', hospitalityIndex = '', ticketTypes }) {
   const { createTicket } = useTicket();
   const atEventTicketPrice = ticketTypes
     ? ticketTypes.filter((ticket) => ticket.name.includes('mask') && ticket.isRemote === false)[0].price
     : 0;
   const isRemote = modalityIndex === 1;
   const isAtEvent = hospitalityIndex !== '' && modalityIndex === 0;
+  console.log(ticketType);
+
+  const isActive = ticketType.isRemote || (ticketType && hospitalityIndex !== '') ? true : false;
   return (
     <DisplaySection
       title={`Fechado! O total ficou em R$ ${
         isRemote ? ticketType.price : atEventTicketPrice + ticketType.price
       }. Agora é só confirmar`}
-      isActive={isRemote || isAtEvent}
+      isActive={isActive}
     >
       <FlatButton
         description="Reservar ingresso"
