@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import BoxContainer from '../../../components/Dashboard/Containers/BoxContainer';
@@ -13,27 +12,39 @@ export default function Payment() {
   const [hospitalityIndex, setHospitalityIndex] = useState('');
   const [modalityOpt, setModalityOpt] = useState([]);
   const [atEventOpt, setAtEventOpt] = useState([]);
+  const [ticketType, setTicketType] = useState('');
   const { ticketTypes } = useTicketType();
-  const { createTicket } = useTicket();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (ticketTypes) {
       ticketTypes.map((ticket) => {
         let ticketType = ticket;
-        if (ticket.name.includes('mask')) return setModalityOpt((state) => [...state, ticketType]);
+        if (ticket.name.includes('mask')) {
+          return setModalityOpt((state) => [...state, ticketType]);
+        }
         return setAtEventOpt((state) => [...state, ticketType]);
       });
     }
   }, [ticketTypes]);
 
-  function checkModalityIndex(index) {
-    modalityIndex !== index ? setModalityIndex(index) : setModalityIndex('');
+  function checkAndSetModality(index, type) {
+    if (modalityIndex !== index) {
+      setModalityIndex(index);
+      setTicketType(type);
+      return;
+    }
+    setModalityIndex('');
+    setTicketType('');
   }
-  function checkHospitalityIndex(index) {
-    hospitalityIndex !== index ? setHospitalityIndex(index) : setHospitalityIndex('');
+  function checkHospitalityIndex(index, type) {
+    if (hospitalityIndex !== index) {
+      setHospitalityIndex(index);
+      setTicketType(type);
+      return;
+    }
+    setHospitalityIndex('');
+    setTicketType('');
   }
-
   return (
     <PaymentSection>
       <TitleSection>Ingresso e pagamento</TitleSection>
@@ -44,7 +55,7 @@ export default function Payment() {
             description={data.name.split('-')[0]}
             value={`R$ ${data.price}`}
             isTapped={modalityIndex === index}
-            onClick={() => checkModalityIndex(index)}
+            onClick={() => checkAndSetModality(index, data)}
           />
         ))}
       </DisplaySection>
@@ -55,34 +66,46 @@ export default function Payment() {
             description={data.name.split('-')[0]}
             value={data.includesHotel ? `+ R$ ${data.price}` : '+ R$ 0'}
             isTapped={hospitalityIndex === index}
-            onClick={() => checkHospitalityIndex(index)}
+            onClick={() => checkHospitalityIndex(index, data)}
           />
         ))}
       </DisplaySection>
-      {modalityOpt
-        .filter((data) => data.isRemote === true)
-        .map((data, index) => (
-          <DisplaySection
-            key={index}
-            title={`Fechado! O total ficou em R$ ${data.price}. Agora é só confirmar`}
-            isActive={modalityIndex === 1}
-          >
-            <FlatButton
-              description="Reservar ingresso"
-              onClick={async() => {
-                const onlineTicketTypeId = ticketTypes.filter((ticket) => ticket.isRemote === true);
-                try {
-                  await createTicket(onlineTicketTypeId[0].id);
-                  toast('Ticket reservado com sucesso!');
-                  navigate('/dashboard/hotel');
-                } catch (error) {
-                  toast('Não foi possível reservar seu ticket, favor tente novamente');
-                }
-              }}
-            />
-          </DisplaySection>
-        ))}
+      <OnlineReserveButton
+        modalityIndex={modalityIndex}
+        ticketType={ticketType}
+        ticketTypes={ticketTypes}
+        hospitalityIndex={hospitalityIndex}
+      />
     </PaymentSection>
+  );
+}
+
+function OnlineReserveButton({ ticketType, modalityIndex = '', hospitalityIndex = '', ticketTypes = {} }) {
+  const { createTicket } = useTicket();
+  const atEventTicketPrice = ticketTypes
+    ? ticketTypes.filter((ticket) => ticket.name.includes('mask') && ticket.isRemote === false)[0].price
+    : 0;
+  const isRemote = modalityIndex === 1;
+  const isAtEvent = hospitalityIndex !== '' && modalityIndex === 0;
+  return (
+    <DisplaySection
+      title={`Fechado! O total ficou em R$ ${
+        isRemote ? ticketType.price : atEventTicketPrice + ticketType.price
+      }. Agora é só confirmar`}
+      isActive={isRemote || isAtEvent}
+    >
+      <FlatButton
+        description="Reservar ingresso"
+        onClick={async() => {
+          try {
+            await createTicket(ticketType.id);
+            toast('Ticket reservado com sucesso!');
+          } catch (error) {
+            toast('Não foi possível reservar seu ticket, favor tente novamente');
+          }
+        }}
+      />
+    </DisplaySection>
   );
 }
 
