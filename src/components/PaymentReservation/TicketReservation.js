@@ -73,7 +73,7 @@ export default function TicketReservation() {
           />
         ))}
       </DisplaySection>
-      <ReserveButton ticketType={ticketType} hospitalityIndex={hospitalityIndex} priceAtEvent={priceAtEvent} />
+      <ReserveButton ticketType={ticketType} hospitalityIndex={hospitalityIndex} priceAtEvent={priceAtEvent} modalityIndex={modalityIndex}/>
     </PaymentSection>
   );
 }
