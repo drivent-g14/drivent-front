@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
 export default function Hotel() {
   return (
     <HotelsSections>
@@ -7,7 +7,7 @@ export default function Hotel() {
       <HotelsOptionSection>
         <p>Primeiro, escolha seu hotel</p>
         <HotelsCardsSection>
-       
+          <CardContainer />
         </HotelsCardsSection>
       </HotelsOptionSection>
     </HotelsSections>
