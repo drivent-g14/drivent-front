@@ -16,11 +16,12 @@ export default function CardContainer({ height, width, description, value, isTap
       sx={{ height: height ?? '320px', width: width ?? '210px' }}
       {...props}
     >
-      <DescriptionDiv>
-        <Description>
-          {'teste'}
-        </Description>
-      </DescriptionDiv>
+      <CardContent>
+        <div>teste</div>
+        <div>teste</div>
+        <div>teste</div>
+      </CardContent>
+
     </MuiContainer>
 
   );
@@ -33,18 +34,15 @@ const MuiContainer = styled(Box)`
   overflow: hidden;
 `;
 
-const DescriptionDiv = styled.div`
+const CardContent = styled.div`
   display: flex;
   height: 100%;
-  width: 100%;
-  row-gap: 8px;
+  width: 100%
+  column-gap: 8px;
+  row-gap: 16px;
   flex-direction: column;
   justify-content: start;
-  align-items: center;
-  font-size: 14px;
-`;
-
-const Description = styled.div`
-  color: #454545;
-  font-weight: 500;
+  align-items: start;
+  background-color:red;
+  padding: 20px;
 `;
