@@ -6,6 +6,7 @@ import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import ReserveButton from './ReservationButton';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
+import FlatButton from '../Dashboard/Buttons/FlatButton';
 
 export default function TicketReservation() {
   const [modalityIndex, setModalityIndex] = useState('');
@@ -16,14 +17,6 @@ export default function TicketReservation() {
   const [priceAtEvent, setPriceAtEvent] = useState(0);
   const [hiddenPayment, setHiddenPayment] = useState(true);
   const { ticketTypes } = useTicketType();
-
-  const initialValues = {
-    cvc: '',
-    expiry: '',
-    focus: '',
-    name: '',
-    number: '',
-  };
 
   useEffect(() => {
     if (ticketTypes) {
@@ -94,22 +87,42 @@ export default function TicketReservation() {
             <BoxContainer width={290} height={108} isTapped={true} description={changeName(modalityIndex, hospitalityIndex)} value={`R$ ${ticketType.isRemote ? ticketType.price : priceAtEvent + ticketType.price}`}/>
           </DisplaySection>
           <DisplaySection isActive={true} title={'Pagamento'}>
-            <PaymentForm>
-              <Cards 
-                cvc={initialValues.cvc}
-                expiry={initialValues.expiry}
-                focused={initialValues.focus}
-                name={initialValues.name}
-                number={initialValues.number}
-              />
-              {/* <form>
-                <input
-                  type="tel"
-                  name="number"
-                  placeholder="Card Number"
+            <PaymentSection>
+              <PaymentForm>
+                <Cards 
+                  cvc={''}
+                  expiry={''}
+                  focused={''}
+                  name={''}
+                  number={''}
                 />
-              </form> */}
-            </PaymentForm>
+                <Form >
+                  <input
+                    type="tel"
+                    name="number"
+                    placeholder="Card Number"
+                  />
+                  <input
+                    type="tel"
+                    name="name"
+                    placeholder="Name"
+                  />
+                  <InputAligner>
+                    <input
+                      type="tel"
+                      name="validthru"
+                      placeholder="Valid Thru"
+                    />
+                    <input
+                      type="tel"
+                      name="number"
+                      placeholder="CVC"
+                    />
+                  </InputAligner>
+                </Form>
+              </PaymentForm>
+              <FlatButton description="Finalizar pagamento"/>
+            </PaymentSection>
           </DisplaySection>
         </>
       }
@@ -136,6 +149,37 @@ const TitleSection = styled.p`
 `;
 
 const PaymentForm = styled.div`
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 32px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  input{
+    width: 30vw;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #CECECE;
+  }
+
+  input::placeholder{
+    padding-left: 5px;
+  }
+`;
+
+const InputAligner = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  input:nth-child(1){
+    width: 20vw;
+  }
+
+  input:nth-child(2){
+    width: 8vw;
+  }
 `;
