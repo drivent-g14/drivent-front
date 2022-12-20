@@ -15,7 +15,6 @@ import Payment from './pages/Dashboard/Payment';
 import Hotel from './pages/Dashboard/Hotel';
 import Activities from './pages/Dashboard/Activities';
 import Certificate from './pages/Dashboard/Certificate';
-import PaymentConfirm from './pages/Dashboard/PaymentConfirm';
 
 import { EventInfoProvider } from './contexts/EventInfoContext';
 import { UserProvider } from './contexts/UserContext';
@@ -44,7 +43,6 @@ export default function App() {
               >
                 <Route path="subscription" element={<FillSubscription />} />
                 <Route path="payment" element={<Payment />} />
-                <Route path="payment/confirmation" element={<PaymentConfirm/>}/>
                 <Route path="hotel" element={<Hotel />} />
                 <Route path="activities" element={<Activities />} />
                 <Route path="certificate" element={<Certificate />} />
