@@ -18,9 +18,9 @@ export default function ReserveButton({ ticketType, hospitalityIndex = '', price
         description="Reservar ingresso"
         onClick={async() => {
           try {
-            setHiddenPayment(false);
             // await createTicket(ticketType.id);
             // toast('Ticket reservado com sucesso!');
+            setHiddenPayment(false);
           } catch (error) {
             toast('Não foi possível reservar seu ticket, favor tente novamente');
           }

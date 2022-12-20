@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useTicketType from '../../hooks/api/useTicketType';
 import BoxContainer from '../Dashboard/Containers/BoxContainer';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import ReserveButton from './ReservationButton';
-import Cards from 'react-credit-cards';
-import 'react-credit-cards/es/styles-compiled.css';
-import FlatButton from '../Dashboard/Buttons/FlatButton';
+import PaymentForm from '../Form/PaymentForm';
 
 export default function TicketReservation() {
   const [modalityIndex, setModalityIndex] = useState('');
@@ -88,40 +86,7 @@ export default function TicketReservation() {
           </DisplaySection>
           <DisplaySection isActive={true} title={'Pagamento'}>
             <PaymentSection>
-              <PaymentForm>
-                <Cards 
-                  cvc={''}
-                  expiry={''}
-                  focused={''}
-                  name={''}
-                  number={''}
-                />
-                <Form >
-                  <input
-                    type="tel"
-                    name="number"
-                    placeholder="Card Number"
-                  />
-                  <input
-                    type="tel"
-                    name="name"
-                    placeholder="Name"
-                  />
-                  <InputAligner>
-                    <input
-                      type="tel"
-                      name="validthru"
-                      placeholder="Valid Thru"
-                    />
-                    <input
-                      type="tel"
-                      name="number"
-                      placeholder="CVC"
-                    />
-                  </InputAligner>
-                </Form>
-              </PaymentForm>
-              <FlatButton description="Finalizar pagamento"/>
+              <PaymentForm/>
             </PaymentSection>
           </DisplaySection>
         </>
@@ -146,40 +111,4 @@ const PaymentSection = styled.div`
 
 const TitleSection = styled.p`
   font-size: 28px;
-`;
-
-const PaymentForm = styled.div`
-  display: flex;
-  flex-direction: row;
-  column-gap: 32px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  input{
-    width: 30vw;
-    height: 30px;
-    border-radius: 5px;
-    border: 1px solid #CECECE;
-  }
-
-  input::placeholder{
-    padding-left: 5px;
-  }
-`;
-
-const InputAligner = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  input:nth-child(1){
-    width: 20vw;
-  }
-
-  input:nth-child(2){
-    width: 8vw;
-  }
 `;
