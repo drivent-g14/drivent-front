@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
 import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
-
+import image from '../../../assets/images/hotels1.png';
 export default function Hotel() {
   return (
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       <DisplaySection title={'Primeiro, escolha seu hotel'}>
-        <CardContainer title={'Driven Resort'} roomsTypes={'Suites'} vacancies={12} image={'https://images.pexels.com/photos/1802255/pexels-photo-1802255.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'} />
+        <CardContainer title={'Driven Resort'} roomsTypes={'Suites'} vacancies={12} image={image}/>
         <CardContainer title={'Driven Hotel 2'} roomsTypes={'Suites, cama'} vacancies={12}/>
-        <CardContainer />
+        <CardContainer/>
       </DisplaySection>
     </HotelsSections>
   );

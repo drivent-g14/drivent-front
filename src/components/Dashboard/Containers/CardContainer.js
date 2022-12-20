@@ -23,7 +23,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
         <CardMedia>
           {image ? <CardImage src={image} /> : <CustomCiImageIcon />}
         </CardMedia>
-        <TitleCard>{title ?? 'Falta um título'}</TitleCard>
+        <TitleCard>{title ?? ''}</TitleCard>
         {(roomsTypes && vacancies) ?
           <>
             <SubTitleCard>Tipos de acomodação
