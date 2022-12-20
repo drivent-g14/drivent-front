@@ -4,8 +4,10 @@ import styled from 'styled-components';
 
 //[height]: Define a altura do container;
 //[width]: Define a largura do container;
-//[title] - String: Des;
-//[value]- String opcional: Valor a ser mostrado no container(geralmente em R$);
+//[title] - String: Adiciona um titulo ao Card;
+//[image - String: Deve ser enviar uma url da imagem, assim é adicionado a um imagem ao card;
+//[roomType] - String(opcional porém é necessário o vacancies): Diz os tipos de quartos disponíveis, ex: Suíte, Single...;
+//[vancancies]- String(opcional porém é necessário roomsType): Diz o numero de vagas no hotel disponivel;
 //[...props]: Demais parametros que o componente permita, Ex: onClick. Porém deve ser utilizado na
 //na construção do componente
 
@@ -21,7 +23,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
         <CardMedia>
           {image ? <CardImage src={image} /> : <CustomCiImageIcon />}
         </CardMedia>
-        <TitleCard>{title ?? 'Driven hotel'}</TitleCard>
+        <TitleCard>{title ?? 'Falta um título'}</TitleCard>
         {(roomsTypes && vacancies) ?
           <>
             <SubTitleCard>Tipos de acomodação
