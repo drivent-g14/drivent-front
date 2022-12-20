@@ -1,14 +1,20 @@
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
+import BoxContainer from '../Dashboard/Containers/BoxContainer';
+import DisplaySection from '../Dashboard/Sections/DisplaySection';
 
 export default function PaymentConfirmation() {
   const { state } = useLocation();
-  console.log(changeName(state.modalityIndex, state.hospitalityIndex));
 
   return (
     <Container>
       <TitleSection>Ingresso e pagamento</TitleSection>
-      <h1>{state.price}</h1>
+      <DisplaySection isActive={true} title={'Ingresso escolhido'}>
+        <BoxContainer width={290} height={108} isTapped={true} description={changeName(state.modalityIndex, state.hospitalityIndex)} value={`R$ ${state.price}`}/>
+      </DisplaySection>
+      <DisplaySection isActive={true} title={'Pagamento'}>
+      
+      </DisplaySection>
     </Container>
   );
 }
