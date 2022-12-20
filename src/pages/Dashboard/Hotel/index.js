@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
+import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
+
 export default function Hotel() {
   return (
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
-      <HotelsOptionSection>
-        <p>Primeiro, escolha seu hotel</p>
-        <HotelsCardsSection>
-          <CardContainer />
-        </HotelsCardsSection>
-      </HotelsOptionSection>
+      <DisplaySection title={'Primeiro, escolha seu hotel'}></DisplaySection>
+      <CardContainer>
+
+      </CardContainer>
     </HotelsSections>
   );
 }
