@@ -1,14 +1,21 @@
 import styled from 'styled-components';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Input from './Input';
 import { useForm } from '../../hooks/useForm';
 import FormValidations from '../PersonalInformationForm/FormValidations';
 import { toast } from 'react-toastify';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
+import * as useTicket from '../../hooks/api/useTicket';
 
 export default function PaymentForm() {
+  const { ticket } = useTicket.useGetTicket();
+
+  useEffect(() => {
+    console.log(ticket);
+  }, [ticket]);
+
   const {
     handleChange,
     handleSubmit,

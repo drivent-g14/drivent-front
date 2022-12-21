@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
-import useTicket from '../../hooks/api/useTicket';
+import * as useTicket from '../../hooks/api/useTicket';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 
 export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, setHiddenPayment }) {
-  const { createTicket } = useTicket();
+  const createTicket = useTicket.addTicket();
   const isActive = ticketType.isRemote || (!ticketType.isRemote && hospitalityIndex !== '') ? true : false;
 
   return (
