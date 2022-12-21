@@ -7,7 +7,7 @@ export default function Hotel() {
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       <DisplaySection title={'Primeiro, escolha seu hotel'}>
-        <CardContainer title={'Driven Resort'} roomsTypes={'Suites'} vacancies={12} image={image}/>
+        <CardContainer title={'Driven Resort'}  vacancies={12} image={image}/>
         <CardContainer title={'Driven Hotel 2'} roomsTypes={'Suites, cama'} vacancies={12}/>
         <CardContainer/>
       </DisplaySection>
