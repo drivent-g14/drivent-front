@@ -7,21 +7,23 @@ import { useForm } from '../../hooks/useForm';
 import FormValidations from '../PersonalInformationForm/FormValidations';
 import { toast } from 'react-toastify';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
+import usePayment from '../../hooks/api/usePayment';
 import * as useTicket from '../../hooks/api/useTicket';
 
 export default function PaymentForm() {
+  const [issuer, setIssuer] = useState('');
+  const [ticketId, setTicketId] = useState(0);
   const { ticket } = useTicket.useGetTicket();
 
   useEffect(() => {
-    console.log(ticket);
+    if(ticket) setTicketId(ticket.id);
   }, [ticket]);
 
   const {
     handleChange,
-    handleSubmit,
+    handleInputFocus,
     data,
     errors,
-    handleInputFocus
   } = useForm({
     validation: FormValidations,
 
@@ -33,11 +35,6 @@ export default function PaymentForm() {
         cvc: data.cvc,
         focused: data.focused,
       };
-      try {
-        toast('Pagamento realizado com sucesso!');
-      } catch (error) {
-        toast('Não foi possível processar o pagamento!');
-      }  
     },
 
     initialValues: {
@@ -49,6 +46,33 @@ export default function PaymentForm() {
     }
   });
 
+  const { createPayment } = usePayment({
+    ticketId,
+    cardData: {
+      issuer: issuer,
+      number: data.number,
+      name: data.name,
+      expirationDate: data.expiry,
+      cvv: data.cvc,
+    }
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    
+    if(data.cvc.length !== 3 || data.expiry.length !== 4 || data.name.length > 16 || data.number.length > 16 || 
+      data.name === '' || issuer === 'unknown')
+      toast('Dados incorretos, insira novamente!');
+    else{
+      try {
+        await createPayment();
+        toast('Pagamento realizado com sucesso!');
+      } catch (error) {
+        toast('Não foi possível processar o pagamento!');
+      }  
+    }
+  }
+
   return (
     <>
       <Wrapper>
@@ -58,12 +82,15 @@ export default function PaymentForm() {
           name={data.name}
           number={data.number}
           focused={data.focused}
+          callback={({ issuer }, isValid) => {
+            setIssuer(issuer);
+          }}
         />
         <Form >
           <Input
             name="number"
             label="Card Number"
-            type="text"
+            type="number"
             size="small"
             helperText="E.g.: 49..., 51..., 36..., 37..."
             value={data.number}
@@ -81,7 +108,7 @@ export default function PaymentForm() {
           />
           <InputAligner>
             <Input
-              type="text"
+              type="number"
               name="expiry"
               label="Valid Thru"
               value={data.expiry}
@@ -89,7 +116,7 @@ export default function PaymentForm() {
               onFocus={handleInputFocus}
             />
             <Input
-              type="text"
+              type="number"
               name="cvc"
               label="CVC"
               value={data.cvc}

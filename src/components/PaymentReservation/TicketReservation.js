@@ -86,7 +86,7 @@ export default function TicketReservation() {
           </DisplaySection>
           <DisplaySection isActive={true} title={'Pagamento'}>
             <PaymentSection>
-              <PaymentForm/>
+              <PaymentForm />
             </PaymentSection>
           </DisplaySection>
         </>
