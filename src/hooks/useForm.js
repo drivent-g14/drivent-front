@@ -13,6 +13,10 @@ export const useForm = (options) => {
     });
   };
 
+  const handleInputFocus = (e) => {
+    setData({ ...data, focused: e.target.name });
+  };
+
   const customHandleChange = (key, sanitizeFn) => (inputValue) => {
     const value = sanitizeFn ? sanitizeFn(inputValue) : inputValue;
     setData({
@@ -67,6 +71,7 @@ export const useForm = (options) => {
     handleChange,
     customHandleChange,
     handleSubmit,
+    handleInputFocus,
     errors,
   };
 };

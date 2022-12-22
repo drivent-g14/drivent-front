@@ -1,10 +1,10 @@
 import { toast } from 'react-toastify';
-import useTicket from '../../hooks/api/useTicket';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
+import * as useTicket from '../../hooks/api/useTicket';
 
-export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent }) {
-  const { createTicket } = useTicket();
+export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, setShowPaymentSection }) {
+  const { createTicket } = useTicket.addTicket();
   const isActive = ticketType.isRemote || (!ticketType.isRemote && hospitalityIndex !== '') ? true : false;
 
   return (
@@ -20,6 +20,7 @@ export default function ReserveButton({ ticketType, hospitalityIndex = '', price
           try {
             await createTicket(ticketType.id);
             toast('Ticket reservado com sucesso!');
+            setShowPaymentSection(false);
           } catch (error) {
             toast('Não foi possível reservar seu ticket, favor tente novamente');
           }
