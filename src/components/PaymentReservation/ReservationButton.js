@@ -3,7 +3,7 @@ import FlatButton from '../Dashboard/Buttons/FlatButton';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import * as useTicket from '../../hooks/api/useTicket';
 
-export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, setHiddenPayment }) {
+export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, setShowPaymentSection }) {
   const { createTicket } = useTicket.addTicket();
   const isActive = ticketType.isRemote || (!ticketType.isRemote && hospitalityIndex !== '') ? true : false;
 
@@ -20,7 +20,7 @@ export default function ReserveButton({ ticketType, hospitalityIndex = '', price
           try {
             await createTicket(ticketType.id);
             toast('Ticket reservado com sucesso!');
-            setHiddenPayment(false);
+            setShowPaymentSection(false);
           } catch (error) {
             toast('Não foi possível reservar seu ticket, favor tente novamente');
           }

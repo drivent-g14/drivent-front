@@ -22,7 +22,7 @@ export async function createTicket(body, token) {
 
   return response.data;
 }
-export async function getTicketById(token) {
+export async function getUserTicket(token) {
   const response = await api.get('/tickets', {
     headers: {
       Authorization: `Bearer ${token}`,

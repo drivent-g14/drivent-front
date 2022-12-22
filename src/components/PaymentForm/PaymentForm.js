@@ -10,7 +10,7 @@ import FlatButton from '../Dashboard/Buttons/FlatButton';
 import usePayment from '../../hooks/api/usePayment';
 import * as useTicket from '../../hooks/api/useTicket';
 
-export default function PaymentForm({ setPaymentSuccess }) {
+export default function PaymentForm({ setShowPaymentSuccess }) {
   const [issuer, setIssuer] = useState('');
   const [ticketId, setTicketId] = useState(0);
   const { ticket } = useTicket.useGetTicket();
@@ -41,7 +41,7 @@ export default function PaymentForm({ setPaymentSuccess }) {
         if(issuer === 'unknown') toast('Cartão inválido!');
         else{
           await createPayment();
-          setPaymentSuccess(true);
+          setShowPaymentSuccess(true);
         }
       } catch (error) {
         toast('Não foi possível processar o pagamento!');

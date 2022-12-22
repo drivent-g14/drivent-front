@@ -14,8 +14,8 @@ export default function TicketReservation() {
   const [atEventOpt, setAtEventOpt] = useState([]);
   const [ticketType, setTicketType] = useState('');
   const [priceAtEvent, setPriceAtEvent] = useState(0);
-  const [hiddenPayment, setHiddenPayment] = useState(true);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [showPaymentSection, setShowPaymentSection] = useState(true);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const { ticketTypes } = useTicketType();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function TicketReservation() {
   return (
     <PaymentSection>
       <TitleSection>Ingresso e pagamento</TitleSection>
-      {hiddenPayment ? 
+      {showPaymentSection ? 
         <>
           <DisplaySection title={'Primeiro, escolha sua modalidade de ingresso'}>
             {modalityOpt.map((data, index) => (
@@ -79,7 +79,7 @@ export default function TicketReservation() {
               />
             ))}
           </DisplaySection>
-          <ReserveButton ticketType={ticketType} hospitalityIndex={hospitalityIndex} priceAtEvent={priceAtEvent} setHiddenPayment={setHiddenPayment}/> 
+          <ReserveButton ticketType={ticketType} hospitalityIndex={hospitalityIndex} priceAtEvent={priceAtEvent} setShowPaymentSection={setShowPaymentSection}/> 
         </>
         :    
         <>   
@@ -88,7 +88,7 @@ export default function TicketReservation() {
           </DisplaySection>
           <DisplaySection isActive={true} title={'Pagamento'}>
             <PaymentSection>
-              {paymentSuccess ? 
+              {showPaymentSuccess ? 
                 <PaymentSuccess>
                   <AiFillCheckCircle style={{ color: '#36B853', width: '40px', height: '40px' }}/>
                   <div>
@@ -97,7 +97,7 @@ export default function TicketReservation() {
                   </div>
                 </PaymentSuccess>
                 : 
-                <PaymentForm setPaymentSuccess={setPaymentSuccess}/>
+                <PaymentForm setShowPaymentSuccess={setShowPaymentSuccess}/>
               }
             </PaymentSection>
           </DisplaySection>
@@ -136,12 +136,12 @@ const PaymentSuccess = styled.div`
   h1{
     font-weight: 700;
     color: #454545;
-    font-size: 16px;
+    font-size: 14px;
   }
 
   p{
     font-weight: 400;
     color: #454545;
-    font-size: 16px;
+    font-size: 14px;
   }
 `;

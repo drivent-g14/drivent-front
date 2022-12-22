@@ -24,13 +24,13 @@ export function useGetTicket() {
     data: ticket,
     loading: ticketLoading,
     error: ticketError,
-    act: getTicketById,
-  } = useAsync(() => ticketApi.getTicketById(token));
+    act: getUserTicket,
+  } = useAsync(() => ticketApi.getUserTicket(token));
 
   return {
     ticket,
     ticketLoading,
     ticketError,
-    getTicketById,
+    getUserTicket,
   };
 }
