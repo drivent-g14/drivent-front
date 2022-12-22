@@ -23,7 +23,7 @@ export default function TicketReservation() {
   const { enrollment } = useEnrollment();
   
   useEffect(() => {
-    if(enrollment) setShowWithoutInscription(true);
+    if(enrollment) setShowWithoutInscription(false);
   }, [enrollment]);
 
   useEffect(() => {
@@ -65,7 +65,11 @@ export default function TicketReservation() {
       {showWithoutInscription ? 
         <Container>
           <h6>Ingresso e pagamento</h6>
-          
+          <div className='NoResult'>
+            <p>
+              Você precisa completar sua inscrição antes <br/> de prosseguir pra escolha de ingresso
+            </p>
+          </div >
         </Container>
         : 
         <>
