@@ -5,8 +5,10 @@ export default function UnauthorizedScreen({ children }) {
 }
 
 const UnauthorizedContainer = styled.div`
-  width: 48%;
+  width: 100%;
   height: 100%;
+  padding-left: 20%;
+  padding-right: 20%;
   display: flex;
   align-items: center;
   justify-content: center;

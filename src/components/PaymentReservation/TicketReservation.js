@@ -11,9 +11,7 @@ export default function TicketReservation() {
   return (
     <PaymentSection>
       <TitleSection>Ingresso e pagamento</TitleSection>
-      <TicketSection>
-        <CheckEnrollment />
-      </TicketSection>
+      <CheckEnrollment />
     </PaymentSection>
   );
 }
@@ -114,11 +112,4 @@ const PaymentSection = styled.div`
 
 const TitleSection = styled.p`
   font-size: 28px;
-`;
-
-const TicketSection = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
 `;
