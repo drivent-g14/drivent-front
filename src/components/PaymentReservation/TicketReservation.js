@@ -74,7 +74,6 @@ function TicketReservationSection() {
 
   return (
     <>
-      {' '}
       <DisplaySection title={'Primeiro, escolha sua modalidade de ingresso'}>
         {modalityOpt.map((data, index) => (
           <BoxContainer
