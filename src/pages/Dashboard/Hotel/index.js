@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
 import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
 import useHotel from '../../../hooks/api/useHotels';
@@ -7,15 +7,15 @@ export default function Hotel() {
   const { hotels } = useHotel();
 
   useEffect(() => {
-  
+
   }, [hotels]);
   return (
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       <DisplaySection title={'Primeiro, escolha seu hotel'}>
         {hotels ? hotels.map((data, index) => (
-          <CardContainer key={index} title={data.name} image={data.image}/>
-        )): ' ' }
+          <CardContainer key={index} title={data.name} image={data.image} />
+        )) : ' '}
       </DisplaySection>
     </HotelsSections>
   );
