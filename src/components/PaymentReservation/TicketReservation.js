@@ -4,7 +4,7 @@ import useTicketType from '../../hooks/api/useTicketType';
 import BoxContainer from '../Dashboard/Containers/BoxContainer';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import ReserveButton from './ReservationButton';
-import PaymentForm from '../Form/PaymentForm';
+import PaymentForm from '../PaymentForm/PaymentForm';
 
 export default function TicketReservation() {
   const [modalityIndex, setModalityIndex] = useState('');

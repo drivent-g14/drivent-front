@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import Cards from 'react-credit-cards';
 import 'react-credit-cards/es/styles-compiled.css';
 import React, { useEffect, useState } from 'react';
-import Input from './Input';
+import Input from '../Form/Input';
 import { useForm } from '../../hooks/useForm';
-import FormValidations from '../PersonalInformationForm/FormValidations';
+import PaymentValidation from './PaymentValidation';
 import { toast } from 'react-toastify';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
 import usePayment from '../../hooks/api/usePayment';
@@ -22,10 +22,11 @@ export default function PaymentForm() {
   const {
     handleChange,
     handleInputFocus,
+    handleSubmit,
     data,
     errors,
   } = useForm({
-    validation: FormValidations,
+    validations: PaymentValidation,
 
     onSubmit: async(data) => {
       const newData = {
@@ -34,6 +35,16 @@ export default function PaymentForm() {
         expiry: data.expiry,
         cvc: data.cvc,
         focused: data.focused,
+      };
+
+      try {
+        if(issuer === 'unknown') toast('Cartão inválido!');
+        else{
+          await createPayment();
+          toast('Pagamento realizado com sucesso!');
+        }
+      } catch (error) {
+        toast('Não foi possível processar o pagamento!');
       };
     },
 
@@ -57,22 +68,6 @@ export default function PaymentForm() {
     }
   });
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    
-    if(data.cvc.length !== 3 || data.expiry.length !== 4 || data.name.length > 16 || data.number.length > 16 || 
-      data.name === '' || issuer === 'unknown')
-      toast('Dados incorretos, insira novamente!');
-    else{
-      try {
-        await createPayment();
-        toast('Pagamento realizado com sucesso!');
-      } catch (error) {
-        toast('Não foi possível processar o pagamento!');
-      }  
-    }
-  }
-
   return (
     <>
       <Wrapper>
@@ -85,18 +80,20 @@ export default function PaymentForm() {
           callback={({ issuer }, isValid) => {
             setIssuer(issuer);
           }}
+          acceptedCards={['visa', 'mastercard']}
         />
         <Form >
           <Input
             name="number"
             label="Card Number"
-            type="number"
+            type="text"
             size="small"
             helperText="E.g.: 49..., 51..., 36..., 37..."
             value={data.number}
             onChange={handleChange('number')}
             onFocus={handleInputFocus}
           />
+          {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
           <Input
             type="text"
             name="name"
@@ -106,6 +103,7 @@ export default function PaymentForm() {
             onChange={handleChange('name')}
             onFocus={handleInputFocus}
           />
+          {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
           <InputAligner>
             <Input
               type="number"
@@ -115,6 +113,7 @@ export default function PaymentForm() {
               onChange={handleChange('expiry')}
               onFocus={handleInputFocus}
             />
+            {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
             <Input
               type="number"
               name="cvc"
@@ -123,6 +122,7 @@ export default function PaymentForm() {
               onChange={handleChange('cvc')}
               onFocus={handleInputFocus}
             />
+            {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
           </InputAligner> 
         </Form>
       </Wrapper>
@@ -147,4 +147,10 @@ const Form = styled.form`
 const InputAligner = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const ErrorMsg = styled.p`
+  color: red;
+  font-size: 12px;
+  padding-top: 5px;
 `;
