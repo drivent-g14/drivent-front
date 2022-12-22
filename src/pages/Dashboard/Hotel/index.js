@@ -1,15 +1,21 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
 import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
-import image from '../../../assets/images/hotels1.png';
+import useHotel from '../../../hooks/api/useHotels';
 export default function Hotel() {
+  const { hotels } = useHotel();
+
+  useEffect(() => {
+  
+  }, [hotels]);
   return (
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       <DisplaySection title={'Primeiro, escolha seu hotel'}>
-        <CardContainer title={'Driven Resort'}  vacancies={12} image={image}/>
-        <CardContainer title={'Driven Hotel 2'} roomsTypes={'Suites, cama'} vacancies={12}/>
-        <CardContainer/>
+        {hotels ? hotels.map((data, index) => (
+          <CardContainer key={index} title={data.name} image={data.image}/>
+        )): ' ' }
       </DisplaySection>
     </HotelsSections>
   );
