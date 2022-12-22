@@ -7,7 +7,7 @@ const validations = {
   },
   number: {
     custom: {
-      isValid: (value) => !isNaN(parseInt(value)) && parseInt(value?.length) === 16,
+      isValid: (value) => !isNaN(parseInt(value)) && parseInt(value?.length) === 16 || parseInt(value?.length) === 19,
       message: 'Digite um número válido'
     }
   },

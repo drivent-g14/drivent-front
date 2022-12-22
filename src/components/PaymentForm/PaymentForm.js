@@ -10,7 +10,7 @@ import FlatButton from '../Dashboard/Buttons/FlatButton';
 import usePayment from '../../hooks/api/usePayment';
 import * as useTicket from '../../hooks/api/useTicket';
 
-export default function PaymentForm() {
+export default function PaymentForm({ setPaymentSuccess }) {
   const [issuer, setIssuer] = useState('');
   const [ticketId, setTicketId] = useState(0);
   const { ticket } = useTicket.useGetTicket();
@@ -41,7 +41,7 @@ export default function PaymentForm() {
         if(issuer === 'unknown') toast('Cartão inválido!');
         else{
           await createPayment();
-          toast('Pagamento realizado com sucesso!');
+          setPaymentSuccess(true);
         }
       } catch (error) {
         toast('Não foi possível processar o pagamento!');
@@ -105,24 +105,31 @@ export default function PaymentForm() {
           />
           {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
           <InputAligner>
-            <Input
-              type="number"
-              name="expiry"
-              label="Valid Thru"
-              value={data.expiry}
-              onChange={handleChange('expiry')}
-              onFocus={handleInputFocus}
-            />
-            {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
-            <Input
-              type="number"
-              name="cvc"
-              label="CVC"
-              value={data.cvc}
-              onChange={handleChange('cvc')}
-              onFocus={handleInputFocus}
-            />
-            {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+            <div>
+              <Input
+                type="text"
+                name="expiry"
+                label="Valid Thru"
+                size="small"
+                sx={{ width: '10px' }}
+                value={data.expiry}
+                onChange={handleChange('expiry')}
+                onFocus={handleInputFocus}
+              />
+              {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
+            </div>
+            <div>
+              <Input
+                type="text"
+                name="cvc"
+                label="CVC"
+                size="small"
+                value={data.cvc}
+                onChange={handleChange('cvc')}
+                onFocus={handleInputFocus}
+              />
+              {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+            </div>
           </InputAligner> 
         </Form>
       </Wrapper>
@@ -134,6 +141,7 @@ export default function PaymentForm() {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   column-gap: 32px;
 `;
 
@@ -147,10 +155,11 @@ const Form = styled.form`
 const InputAligner = styled.div`
   display: flex;
   justify-content: space-between;
+
 `;
 
 const ErrorMsg = styled.p`
   color: red;
   font-size: 12px;
-  padding-top: 5px;
+  padding: 5px 0 0 5px;
 `;

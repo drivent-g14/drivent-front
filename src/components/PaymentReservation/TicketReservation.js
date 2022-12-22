@@ -5,6 +5,7 @@ import BoxContainer from '../Dashboard/Containers/BoxContainer';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import ReserveButton from './ReservationButton';
 import PaymentForm from '../PaymentForm/PaymentForm';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 export default function TicketReservation() {
   const [modalityIndex, setModalityIndex] = useState('');
@@ -14,6 +15,7 @@ export default function TicketReservation() {
   const [ticketType, setTicketType] = useState('');
   const [priceAtEvent, setPriceAtEvent] = useState(0);
   const [hiddenPayment, setHiddenPayment] = useState(true);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   const { ticketTypes } = useTicketType();
 
   useEffect(() => {
@@ -86,7 +88,17 @@ export default function TicketReservation() {
           </DisplaySection>
           <DisplaySection isActive={true} title={'Pagamento'}>
             <PaymentSection>
-              <PaymentForm />
+              {paymentSuccess ? 
+                <PaymentSuccess>
+                  <AiFillCheckCircle style={{ color: '#36B853', width: '40px', height: '40px' }}/>
+                  <div>
+                    <h1>Pagamento confirmado!</h1>
+                    <p>Prossiga para a escolha de hospedagem e atividades</p>
+                  </div>
+                </PaymentSuccess>
+                : 
+                <PaymentForm setPaymentSuccess={setPaymentSuccess}/>
+              }
             </PaymentSection>
           </DisplaySection>
         </>
@@ -111,4 +123,25 @@ const PaymentSection = styled.div`
 
 const TitleSection = styled.p`
   font-size: 28px;
+`;
+
+const PaymentSuccess = styled.div`
+  display: flex;
+  align-items: center;
+
+  div{
+    margin-left: 10px;
+  }
+
+  h1{
+    font-weight: 700;
+    color: #454545;
+    font-size: 16px;
+  }
+
+  p{
+    font-weight: 400;
+    color: #454545;
+    font-size: 16px;
+  }
 `;
