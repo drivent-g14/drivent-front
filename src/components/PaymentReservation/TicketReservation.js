@@ -1,11 +1,37 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useEnrollment from '../../hooks/api/useEnrollment';
 import useTicketType from '../../hooks/api/useTicketType';
 import BoxContainer from '../Dashboard/Containers/BoxContainer';
+import UnauthorizedScreen from '../Dashboard/Errors/UnauthorizedScreen';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import ReserveButton from './ReservationButton';
 
 export default function TicketReservation() {
+  return (
+    <PaymentSection>
+      <TitleSection>Ingresso e pagamento</TitleSection>
+      <TicketSection>
+        <CheckEnrollment />
+      </TicketSection>
+    </PaymentSection>
+  );
+}
+
+function CheckEnrollment() {
+  const { enrollment } = useEnrollment();
+
+  //TODO: add loading screen
+  return enrollment ? (
+    <TicketReservationSection />
+  ) : (
+    <UnauthorizedScreen>
+      Você precisa completar sua inscrição antes de prosseguir para a escolha de ingresso.
+    </UnauthorizedScreen>
+  );
+}
+
+function TicketReservationSection() {
   const [modalityIndex, setModalityIndex] = useState('');
   const [hospitalityIndex, setHospitalityIndex] = useState('');
   const [modalityOpt, setModalityOpt] = useState([]);
@@ -49,8 +75,8 @@ export default function TicketReservation() {
   }
 
   return (
-    <PaymentSection>
-      <TitleSection>Ingresso e pagamento</TitleSection>
+    <>
+      {' '}
       <DisplaySection title={'Primeiro, escolha sua modalidade de ingresso'}>
         {modalityOpt.map((data, index) => (
           <BoxContainer
@@ -74,11 +100,13 @@ export default function TicketReservation() {
         ))}
       </DisplaySection>
       <ReserveButton ticketType={ticketType} hospitalityIndex={hospitalityIndex} priceAtEvent={priceAtEvent} />
-    </PaymentSection>
+    </>
   );
 }
 
 const PaymentSection = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 32px;
@@ -86,4 +114,11 @@ const PaymentSection = styled.div`
 
 const TitleSection = styled.p`
   font-size: 28px;
+`;
+
+const TicketSection = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
