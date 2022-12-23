@@ -48,6 +48,7 @@ const DescriptionDiv = styled.div`
 `;
 
 const Description = styled.div`
+  text-align: center;
   color: #454545;
   font-weight: 500;
 `;
