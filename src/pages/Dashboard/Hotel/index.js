@@ -6,9 +6,7 @@ import useHotel from '../../../hooks/api/useHotels';
 export default function Hotel() {
   const { hotels } = useHotel();
 
-  useEffect(() => {
-
-  }, [hotels]);
+  useEffect(() => {}, [hotels]);
   return (
     <HotelsSections>
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
