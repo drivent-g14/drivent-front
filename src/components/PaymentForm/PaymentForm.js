@@ -16,16 +16,10 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
   const { ticket } = useTicket.useGetTicket();
 
   useEffect(() => {
-    if(ticket) setTicketId(ticket.id);
+    if (ticket) setTicketId(ticket.id);
   }, [ticket]);
 
-  const {
-    handleChange,
-    handleInputFocus,
-    handleSubmit,
-    data,
-    errors,
-  } = useForm({
+  const { handleChange, handleInputFocus, handleSubmit, data, errors } = useForm({
     validations: PaymentValidation,
 
     onSubmit: async(data) => {
@@ -38,14 +32,14 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
       };
 
       try {
-        if(issuer === 'unknown') toast('Cartão inválido!');
-        else{
+        if (issuer === 'unknown') toast('Cartão inválido!');
+        else {
           await createPayment();
           setShowPaymentSuccess(true);
         }
       } catch (error) {
         toast('Não foi possível processar o pagamento!');
-      };
+      }
     },
 
     initialValues: {
@@ -54,7 +48,7 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
       expiry: '',
       cvc: '',
       focused: '',
-    }
+    },
   });
 
   const { createPayment } = usePayment({
@@ -65,13 +59,13 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
       name: data.name,
       expirationDate: data.expiry,
       cvv: data.cvc,
-    }
+    },
   });
 
   return (
     <>
       <Wrapper>
-        <Cards 
+        <Cards
           cvc={data.cvc}
           expiry={data.expiry}
           name={data.name}
@@ -82,7 +76,7 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
           }}
           acceptedCards={['visa', 'mastercard']}
         />
-        <Form >
+        <Form>
           <Input
             name="number"
             label="Card Number"
@@ -130,10 +124,10 @@ export default function PaymentForm({ setShowPaymentSuccess }) {
               />
               {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
             </div>
-          </InputAligner> 
+          </InputAligner>
         </Form>
       </Wrapper>
-      <FlatButton onClick={handleSubmit} description="Finalizar pagamento"/>
+      <FlatButton onClick={handleSubmit} description="Finalizar pagamento" />
     </>
   );
 }
@@ -149,13 +143,11 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
 `;
 
 const InputAligner = styled.div`
   display: flex;
   justify-content: space-between;
-
 `;
 
 const ErrorMsg = styled.p`
