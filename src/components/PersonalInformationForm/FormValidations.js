@@ -68,6 +68,7 @@ const validations = {
       message: 'Digite um número válido',
     },
   },
+
 };
 
 export default validations;
