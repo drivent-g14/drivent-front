@@ -2,7 +2,6 @@ import { toast } from 'react-toastify';
 import FlatButton from '../Dashboard/Buttons/FlatButton';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import * as useTicket from '../../hooks/api/useTicket';
-import { WindowSharp } from '@mui/icons-material';
 
 export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, changeSection }) {
   const { createTicket } = useTicket.addTicket();
