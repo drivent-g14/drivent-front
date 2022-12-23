@@ -3,7 +3,7 @@ import FlatButton from '../Dashboard/Buttons/FlatButton';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import * as useTicket from '../../hooks/api/useTicket';
 
-export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent, changeSection }) {
+export default function ReserveButton({ ticketType, hospitalityIndex = '', priceAtEvent }) {
   const { createTicket } = useTicket.addTicket();
   const isActive = ticketType.isRemote || (!ticketType.isRemote && hospitalityIndex !== '') ? true : false;
 
