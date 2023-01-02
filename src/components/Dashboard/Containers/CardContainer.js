@@ -3,10 +3,19 @@ import { CiImageOff } from 'react-icons/ci';
 import styled from 'styled-components';
 
 function TextsOfCards({ roomsTypes, vacancies }) {
+  function FilterRomms(roomsTypes) {
+    if(roomsTypes.length === 1) { return roomsTypes;};
+    if(roomsTypes.length === 2) { return roomsTypes.join(' e '); };
+    if(roomsTypes.length > 2) {
+      const last = roomsTypes.pop();
+      return roomsTypes.join(', ') + ' e ' + last;
+    }
+  }
+  
   return (
     <>
       <SubTitleCard>Tipos de acomodação
-        <TextCard>{roomsTypes.join(', ')}</TextCard>
+        <TextCard>{FilterRomms(roomsTypes)}</TextCard>
       </SubTitleCard>
       <SubTitleCard>Vagas disponíveis:
         <TextCard>{vacancies.reduce((acc, cur) => acc + cur, 0)}</TextCard>
