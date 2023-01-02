@@ -2,6 +2,19 @@ import { Box } from '@material-ui/core';
 import { CiImageOff } from 'react-icons/ci';
 import styled from 'styled-components';
 
+function TextsOfCards({ roomsTypes, vacancies }) {
+  return (
+    <>
+      <SubTitleCard>Tipos de acomodação
+        <TextCard>{roomsTypes.join(', ')}</TextCard>
+      </SubTitleCard>
+      <SubTitleCard>Vagas disponíveis:
+        <TextCard>{vacancies.reduce((acc, cur) => acc + cur, 0)}</TextCard>
+      </SubTitleCard>
+    </>
+  );
+}
+
 //[height]: Define a altura do container;
 //[width]: Define a largura do container;
 //[title] - String: Adiciona um titulo ao Card;
@@ -19,20 +32,14 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
       sx={{ height: height ?? '320px', width: width ?? '210px' }}
       {...props}
     >
+      
       <CardContent>
         <CardMedia>
           {image ? <CardImage src={image} /> : <CustomCiImageIcon />}
         </CardMedia>
         <TitleCard>{title ?? ''}</TitleCard>
-        {(roomsTypes && vacancies) ?
-          <>
-            <SubTitleCard>Tipos de acomodação
-              <TextCard>{roomsTypes.join(', ')}</TextCard>
-            </SubTitleCard>
-            <SubTitleCard>Vagas disponíveis:
-              <TextCard>{vacancies.reduce((acc, cur) => acc + cur, 0)}</TextCard>
-            </SubTitleCard>
-          </>
+        {(roomsTypes.length && vacancies.length) ?
+          <TextsOfCards roomsTypes={roomsTypes} vacancies={vacancies} />
           : ''}
       </CardContent>
 
@@ -44,7 +51,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
 const MuiContainer = styled(Box)`
   cursor: pointer;
   background-color: #EBEBEB ;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
 `;
 
@@ -61,16 +68,16 @@ const CardContent = styled.div`
 `;
 
 const CardMedia = styled.div`
-  height: 8vw;
-  width: 12vw;
-  border-radius: 20px;
+  height: 12vw;
+  width: 18vw;
+  border-radius: 16px;
   align-self:center;
 `;
 
 const CardImage = styled.img`
   height: 100%;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 16px;
 `;
 
 const CustomCiImageIcon = styled(CiImageOff)`
@@ -97,8 +104,6 @@ const SubTitleCard = styled.p`
 `;
 
 const TextCard = styled.p`
-  font-family: 'Roboto';
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
