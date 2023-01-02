@@ -27,10 +27,10 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
         {(roomsTypes && vacancies) ?
           <>
             <SubTitleCard>Tipos de acomodação
-              <TextCard>{roomsTypes}</TextCard>
+              <TextCard>{roomsTypes.join(', ')}</TextCard>
             </SubTitleCard>
             <SubTitleCard>Vagas disponíveis:
-              <TextCard>{vacancies}</TextCard>
+              <TextCard>{vacancies.reduce((acc, cur) => acc + cur, 0)}</TextCard>
             </SubTitleCard>
           </>
           : ''}

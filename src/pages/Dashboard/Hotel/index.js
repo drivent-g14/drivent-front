@@ -55,7 +55,14 @@ export default function Hotel() {
 function HotelsContainer({ hotels }) {
   return (
     <DisplaySection title={'Primeiro, escolha seu hotel'}>
-      {hotels && hotels.map((data, index) => <CardContainer key={index} title={data.name} image={data.image} />)}
+      {hotels && hotels.map(
+        (data, index) => <CardContainer 
+          key={index} 
+          title={data.name} 
+          image={data.image}
+          roomsTypes={data.Rooms.map( data => data.name)}
+          vacancies={data.Rooms.map(data => data.capacity)} 
+        />)}
     </DisplaySection>
   );
 }
