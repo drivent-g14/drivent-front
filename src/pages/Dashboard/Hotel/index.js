@@ -41,7 +41,7 @@ export default function Hotel() {
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       {paidTicket && (
         <>
-          {ticketType === modalityTicket.AT_EVENT_MODALITY && <HotelsContainer hotels={hotels} />}
+          {ticketType === modalityTicket.AT_EVENT_MODALITY && <> <HotelsContainer hotels={hotels} /> <BoookingContairner></BoookingContairner></>}
           {ticketType === modalityTicket.ONLINE_MODALITY && (
             <UnauthorizedScreen>{unauthorizedMessage}</UnauthorizedScreen>
           )}
@@ -56,13 +56,21 @@ function HotelsContainer({ hotels }) {
   return (
     <DisplaySection title={'Primeiro, escolha seu hotel'}>
       {hotels && hotels.map(
-        (data, index) => <CardContainer 
-          key={index} 
-          title={data.name} 
+        (data, index) => <CardContainer
+          key={index}
+          title={data.name}
           image={data.image}
-          roomsTypes={data.Rooms.map( data => data.name)}
-          vacancies={data.Rooms.map(data => data.capacity)} 
+          roomsTypes={data.Rooms.map(data => data.name)}
+          vacancies={data.Rooms.map(data => data.capacity)}
         />)}
+    </DisplaySection>
+  );
+}
+
+function BoookingContairner() {
+  return (
+    <DisplaySection title={'Ótimo pedida! Agora escolha seu quarto:'}>
+      
     </DisplaySection>
   );
 }

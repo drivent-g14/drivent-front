@@ -4,14 +4,15 @@ import styled from 'styled-components';
 
 function TextsOfCards({ roomsTypes, vacancies }) {
   function FilterRomms(roomsTypes) {
-    if(roomsTypes.length === 1) { return roomsTypes;};
-    if(roomsTypes.length === 2) { return roomsTypes.join(' e '); };
-    if(roomsTypes.length > 2) {
+    roomsTypes = roomsTypes.filter((elem, index, self) => self.indexOf(elem) === index);
+    if (roomsTypes.length === 1) { return roomsTypes; };
+    if (roomsTypes.length === 2) { return roomsTypes.join(' e '); };
+    if (roomsTypes.length > 2) {
       const last = roomsTypes.pop();
       return roomsTypes.join(', ') + ' e ' + last;
     }
   }
-  
+
   return (
     <>
       <SubTitleCard>Tipos de acomodação
@@ -41,7 +42,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
       sx={{ height: height ?? '320px', width: width ?? '210px' }}
       {...props}
     >
-      
+
       <CardContent>
         <CardMedia>
           {image ? <CardImage src={image} /> : <CustomCiImageIcon />}
