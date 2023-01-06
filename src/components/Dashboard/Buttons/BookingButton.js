@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CiUser } from 'react-icons/ci';
+import { IoPersonOutline } from 'react-icons/io5';
 export default function BookingButton({ height, width, number, ...props }) {
   return (
     <BookingButtonStyle>
@@ -39,7 +39,7 @@ const DivIcon = styled.div`
   align-items:center;
 `;
 
-const CustomCiUser = styled(CiUser)`
+const CustomCiUser = styled(IoPersonOutline)`
   height:100%
   width:100%;
   color:#000000
