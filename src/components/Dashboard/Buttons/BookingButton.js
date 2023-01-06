@@ -4,7 +4,7 @@ export default function BookingButton({ height, width, number, ...props }) {
   return (
     <BookingButtonStyle>
       <NumberButton>101</NumberButton>
-      <DivIcon><CustomCiUser/><CustomCiUser/><CustomCiUser/></DivIcon>
+      <DivIcon><CustomIconUser/><CustomIconUser/><CustomIconUser/></DivIcon>
     </BookingButtonStyle>
   );
 }
@@ -39,7 +39,7 @@ const DivIcon = styled.div`
   align-items:center;
 `;
 
-const CustomCiUser = styled(IoPersonOutline)`
+const CustomIconUser = styled(IoPersonOutline)`
   height:100%
   width:100%;
   color:#000000
