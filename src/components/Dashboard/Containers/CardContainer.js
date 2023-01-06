@@ -39,7 +39,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
     <MuiContainer
       height={height}
       width={width}
-      sx={{ height: height ?? '320px', width: width ?? '210px' }}
+      sx={{ height: height ?? '280px', width: width ?? '210px' }}
       {...props}
     >
 
@@ -78,8 +78,8 @@ const CardContent = styled.div`
 `;
 
 const CardMedia = styled.div`
-  height: 12vw;
-  width: 18vw;
+  height: 120px;
+  width: 180px;
   border-radius: 16px;
   align-self:center;
 `;

@@ -5,7 +5,7 @@ import DisplaySection from '../../../components/Dashboard/Sections/DisplaySectio
 import useHotel from '../../../hooks/api/useHotels';
 import { useGetTicket } from '../../../hooks/api/useTicket';
 import UnauthorizedScreen from '../../../components/Dashboard/Errors/UnauthorizedScreen';
-
+import BookingButton from '../../../components/Dashboard/Buttons/BookingButton';
 const unauthorizedMsg = Object.freeze({
   NO_PAYMENT_MSG: 'Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.',
   ONLINE_MODALITY_MSG: 'Sua modalidade de ingresso não possui hospedagem. Prossiga para a escolha de atividades.',
@@ -41,7 +41,7 @@ export default function Hotel() {
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       {paidTicket && (
         <>
-          {ticketType === modalityTicket.AT_EVENT_MODALITY && <> <HotelsContainer hotels={hotels} /> <BoookingContairner></BoookingContairner></>}
+          {ticketType === modalityTicket.AT_EVENT_MODALITY && <><HotelsContainer hotels={hotels} /><BoookingContairner/></>}
           {ticketType === modalityTicket.ONLINE_MODALITY && (
             <UnauthorizedScreen>{unauthorizedMessage}</UnauthorizedScreen>
           )}
@@ -70,10 +70,20 @@ function HotelsContainer({ hotels }) {
 function BoookingContairner() {
   return (
     <DisplaySection title={'Ótimo pedida! Agora escolha seu quarto:'}>
-      
+      <BookingDisplay>
+        {Array.from(Array(12).keys()).map((data, index) => <BookingButton />)}
+      </BookingDisplay>
     </DisplaySection>
   );
 }
+
+const BookingDisplay = styled.div`
+  height: 128px;
+  width: 100%;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: space-between;
+`;
 
 const HotelsSections = styled.div`
   height: 100%;
@@ -81,6 +91,7 @@ const HotelsSections = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 32px;
+  align-items: space-between;
 `;
 
 const TitleSection = styled.p`
