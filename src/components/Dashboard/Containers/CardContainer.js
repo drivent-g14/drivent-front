@@ -34,13 +34,15 @@ function TextsOfCards({ roomsTypes, vacancies }) {
 //[...props]: Demais parametros que o componente permita, Ex: onClick. Porém deve ser utilizado na
 //na construção do componente
 
-export default function CardContainer({ height, width, image, title, roomsTypes, vacancies, ...props }) {
+export default function CardContainer({ height, width, image, title, roomsTypes, vacancies, isTapped, ...props }) {
   return (
     <MuiContainer
       height={height}
       width={width}
+      tapped={isTapped}
       sx={{ height: height ?? '280px', width: width ?? '210px' }}
       {...props}
+      disabladed = {!vacancies}
     >
 
       <CardContent>
@@ -60,7 +62,7 @@ export default function CardContainer({ height, width, image, title, roomsTypes,
 
 const MuiContainer = styled(Box)`
   cursor: pointer;
-  background-color: #EBEBEB ;
+  background-color: ${(props) => props.tapped ? '#FFEED2': '#EBEBEB'}  ;
   border-radius: 16px;
   overflow: hidden;
 `;

@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
-import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
 import useHotel from '../../../hooks/api/useHotels';
 import { useGetTicket } from '../../../hooks/api/useTicket';
 import UnauthorizedScreen from '../../../components/Dashboard/Errors/UnauthorizedScreen';
-import BookingButton from '../../../components/Dashboard/Buttons/BookingButton';
+import { HotelsContainer } from '../../../components/HotelContainer/HotelConaitner';
 const unauthorizedMsg = Object.freeze({
   NO_PAYMENT_MSG: 'Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.',
   ONLINE_MODALITY_MSG: 'Sua modalidade de ingresso não possui hospedagem. Prossiga para a escolha de atividades.',
@@ -41,7 +39,7 @@ export default function Hotel() {
       <TitleSection>Escolha de Hotel e quarto</TitleSection>
       {paidTicket && (
         <>
-          {ticketType === modalityTicket.AT_EVENT_MODALITY && <><HotelsContainer hotels={hotels} /><BoookingContairner/></>}
+          {ticketType === modalityTicket.AT_EVENT_MODALITY && <HotelsContainer hotels={hotels} />}
           {ticketType === modalityTicket.ONLINE_MODALITY && (
             <UnauthorizedScreen>{unauthorizedMessage}</UnauthorizedScreen>
           )}
@@ -51,39 +49,6 @@ export default function Hotel() {
     </HotelsSections>
   );
 }
-
-function HotelsContainer({ hotels }) {
-  return (
-    <DisplaySection title={'Primeiro, escolha seu hotel'}>
-      {hotels && hotels.map(
-        (data, index) => <CardContainer
-          key={index}
-          title={data.name}
-          image={data.image}
-          roomsTypes={data.Rooms.map(data => data.name)}
-          vacancies={data.Rooms.map(data => data.capacity)}
-        />)}
-    </DisplaySection>
-  );
-}
-
-function BoookingContairner() {
-  return (
-    <DisplaySection title={'Ótimo pedida! Agora escolha seu quarto:'}>
-      <BookingDisplay>
-        {Array.from(Array(12).keys()).map((data, index) => <BookingButton />)}
-      </BookingDisplay>
-    </DisplaySection>
-  );
-}
-
-const BookingDisplay = styled.div`
-  height: 128px;
-  width: 100%;
-  display: flex;
-  flex-wrap:wrap;
-  justify-content: space-between;
-`;
 
 const HotelsSections = styled.div`
   height: 100%;
