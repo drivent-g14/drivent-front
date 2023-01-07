@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import UnauthorizedScreen from '../../../components/Dashboard/Errors/UnauthorizedScreen';
 import { useGetTicket } from '../../../hooks/api/useTicket';
 import styled from 'styled-components';
+import { ActivitiesList } from '../../../components/Activities/ActivitiesList';
 
 export default function Activities() {
   const { ticket } = useGetTicket();
@@ -16,14 +17,14 @@ export default function Activities() {
   }, [ticket]);
   
   return (
-    <PaymentContainer>
+    <ActivitiesContainer>
       <TitleSection>Escolha de atividades</TitleSection>
-      {activities ? 'Teste' : <UnauthorizedScreen>{message}</UnauthorizedScreen>}
-    </PaymentContainer>
+      {activities ? <ActivitiesList/> : <UnauthorizedScreen>{message}</UnauthorizedScreen>}
+    </ActivitiesContainer>
   );
 }
 
-const PaymentContainer = styled.div`
+const ActivitiesContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
