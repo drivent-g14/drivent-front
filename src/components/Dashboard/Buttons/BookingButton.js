@@ -1,15 +1,21 @@
 import styled from 'styled-components';
-import { IoPersonOutline } from 'react-icons/io5';
-export default function BookingButton({ height, width, number, ...props }) {
+import { IoPerson, IoPersonOutline } from 'react-icons/io5';
+export default function BookingButton({
+  height,
+  width,
+  number,
+  vacancies,
+  reservations,
+  ...props }) {
   return (
-    <BookingButtonStyle>
-      <NumberButton>101</NumberButton>
-      <DivIcon><CustomIconUser/><CustomIconUser/><CustomIconUser/></DivIcon>
+    <BookingButtonStyle height ={height} width={width}>
+      <NumberButton>{number}</NumberButton>
+      <DivIcon>{Array.from(Array(3).keys()).map((data, index) => <UserDefault />)}</DivIcon>
     </BookingButtonStyle>
   );
 }
 
-const BookingButtonStyle = styled.div`
+const BookingButtonStyle = styled.button`
     height: ${(props) => props.height || '36px'};
     width: ${(props) => props.width || '180px'};
     display: flex;
@@ -19,6 +25,7 @@ const BookingButtonStyle = styled.div`
     cursor:pointer;
     border-radius:8px;
     border: solid 1px #CECECE;
+    background-color: #FFFFFF;
 `;
 
 const NumberButton = styled.p`
@@ -39,8 +46,15 @@ const DivIcon = styled.div`
   align-items:center;
 `;
 
-const CustomIconUser = styled(IoPersonOutline)`
-  height:100%
-  width:100%;
-  color:#000000
+const UserDefault = styled(IoPersonOutline)`
+  font-size: 24px
 `;
+
+const UserReserved = styled(IoPerson)`
+  font-size: 24px;
+`;
+
+const UserSelect = styled(UserReserved)`
+  color:#FF4791;
+`;
+
