@@ -16,16 +16,17 @@ import useSignIn from '../../hooks/api/useSignIn';
 import useOAuthGithub from '../../hooks/api/useOAuth';
 import styled from 'styled-components';
 import githubLogo from '../../assets/images/github-icon-9.png';
+import useSignUp from '../../hooks/api/useSignUp';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { loadingSignIn, signIn } = useSignIn();
-  const {  oAuthGithub } = useOAuthGithub();
+  const { oAuthGithub } = useOAuthGithub();
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
-
+  const { loadingSignUp, signUp } = useSignUp();
   const navigate = useNavigate();
 
   async function submit(event) {
@@ -48,16 +49,19 @@ export default function SignIn() {
       return acc;
     }, {});
     if (queryParams.code) {
+      let userInfo;
       try {
-        const userInfo = await oAuthGithub(queryParams.code);
+        userInfo = await oAuthGithub(queryParams.code);
+        await signUp(`${userInfo.login}@github.com`, userInfo.node_id);
+      } catch (_) {}
+
+      try {
         const userData = await signIn(`${userInfo.login}@github.com`, userInfo.node_id);
         setUserData(userData);
         toast('Login realizado com sucesso!');
         navigate('/dashboard');
-      } catch (error) {
-        console.log(error);
-        toast('Usuário não encontrado!');
-        navigate('/enroll');
+      } catch (_) {
+        toast('Favor tente novamente!');
       }
     }
   };
