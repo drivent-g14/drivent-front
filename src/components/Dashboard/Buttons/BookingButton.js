@@ -4,13 +4,23 @@ export default function BookingButton({
   height,
   width,
   number,
-  vacancies,
-  reservations,
+  ocupations,
+  selection,
   ...props }) {
+  function changeIcon(ocupation) {
+    if(ocupation === 'RESERVED') { return <UserReserved/>;};
+    if(ocupation === 'SELECT') { return <UserSelect />;};
+    if(ocupation === 'VAGUE') { return <UserDefault />;};
+  }
+  function changeColor(selection) {
+    if(selection === 'BUSY') return '#CECECE';
+    if(selection === 'SELECT') return '#FFEED2';
+    if(selection === 'DEFAULT') return '#FFFFFF';
+  }
   return (
-    <BookingButtonStyle height ={height} width={width}>
+    <BookingButtonStyle height ={height} width={width} color = {changeColor(selection)}>
       <NumberButton>{number}</NumberButton>
-      <DivIcon>{Array.from(Array(3).keys()).map((data, index) => <UserDefault />)}</DivIcon>
+      <DivIcon>{ocupations && ocupations.map(data => changeIcon(data))}</DivIcon>
     </BookingButtonStyle>
   );
 }
@@ -25,7 +35,7 @@ const BookingButtonStyle = styled.button`
     cursor:pointer;
     border-radius:8px;
     border: solid 1px #CECECE;
-    background-color: #FFFFFF;
+    background-color: ${(props) => props.color};
 `;
 
 const NumberButton = styled.p`
