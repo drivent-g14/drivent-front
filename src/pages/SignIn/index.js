@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import AuthLayout from '../../layouts/Auth';
 
@@ -14,13 +14,15 @@ import UserContext from '../../contexts/UserContext';
 
 import useSignIn from '../../hooks/api/useSignIn';
 import useOAuthGithub from '../../hooks/api/useOAuth';
+import styled from 'styled-components';
+import githubLogo from '../../assets/images/github-icon-9.png';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { loadingSignIn, signIn } = useSignIn();
-  const { github, oAuthGithub, oAuthGithubError } = useOAuthGithub();
+  const {  oAuthGithub } = useOAuthGithub();
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
 
@@ -32,7 +34,7 @@ export default function SignIn() {
       const userData = await signIn(email, password);
       setUserData(userData);
       toast('Login realizado com sucesso!');
-      //navigate('/dashboard');
+      navigate('/dashboard');
     } catch (err) {
       toast('Não foi possível fazer o login!');
     }
@@ -46,12 +48,16 @@ export default function SignIn() {
       return acc;
     }, {});
     if (queryParams.code) {
-      console.log('iuuu');
-      console.log(queryParams.code);
       try {
-        await oAuthGithub(queryParams.code);
+        const userInfo = await oAuthGithub(queryParams.code);
+        const userData = await signIn(`${userInfo.login}@github.com`, userInfo.node_id);
+        setUserData(userData);
+        toast('Login realizado com sucesso!');
+        navigate('/dashboard');
       } catch (error) {
         console.log(error);
+        toast('Usuário não encontrado!');
+        navigate('/enroll');
       }
     }
   };
@@ -85,9 +91,36 @@ export default function SignIn() {
           </Button>
         </form>
       </Row>
-      <button onClick={() => redirectToGithub()}>Não possui login? Inscreva-se</button>
-      {/* <Link to="/enroll">Não possui login? Inscreva-se</Link> */}
+      <Link to="/enroll">Não possui login? Inscreva-se</Link>
+      <GithubButton onClick={() => redirectToGithub()}>
+        <GithubLogo src={githubLogo} alt="github-login" />
+        <VerticalDivider></VerticalDivider>
+        Login com Github
+      </GithubButton>
       <Row></Row>
     </AuthLayout>
   );
 }
+
+const GithubLogo = styled.img`
+  height: 100%;
+`;
+
+const VerticalDivider = styled.div`
+  width: 1px;
+  height: 70%;
+  background-color: white;
+  margin: 0 5px 0 0;
+`;
+
+const GithubButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  background-color: #444444;
+  color: white;
+  padding-right: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+`;
