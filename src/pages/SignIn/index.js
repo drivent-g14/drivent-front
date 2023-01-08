@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import AuthLayout from '../../layouts/Auth';
 
@@ -15,25 +15,25 @@ import UserContext from '../../contexts/UserContext';
 import useSignIn from '../../hooks/api/useSignIn';
 import useOAuthGithub from '../../hooks/api/useOAuth';
 import styled from 'styled-components';
-import githubLogo from '../../assets/images/github-icon-9.png';
 import useSignUp from '../../hooks/api/useSignUp';
+import GithubButton from '../../components/GithubButton';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const { loadingSignIn, signIn } = useSignIn();
-  const { oAuthGithub } = useOAuthGithub();
+  const { oAuthGithubLoading, oAuthGithub } = useOAuthGithub();
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
-  const { loadingSignUp, signUp } = useSignUp();
+  const { signUp } = useSignUp();
   const navigate = useNavigate();
 
   async function submit(event) {
     event.preventDefault();
     try {
       const userData = await signIn(email, password);
-      setUserData(userData);
+      //setUserData(userData);
       toast('Login realizado com sucesso!');
       navigate('/dashboard');
     } catch (err) {
@@ -57,9 +57,9 @@ export default function SignIn() {
 
       try {
         const userData = await signIn(`${userInfo.login}@github.com`, userInfo.node_id);
-        setUserData(userData);
+        //setUserData(userData);
         toast('Login realizado com sucesso!');
-        navigate('/dashboard');
+        //navigate('/dashboard');
       } catch (_) {
         toast('Favor tente novamente!');
       }
@@ -82,49 +82,31 @@ export default function SignIn() {
       <Row>
         <Label>Entrar</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            label="E-mail"
+            type="text"
+            fullWidth
+            value={email}
+            disabled={loadingSignIn || oAuthGithubLoading}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Input
             label="Senha"
             type="password"
             fullWidth
             value={password}
+            disabled={loadingSignIn || oAuthGithubLoading}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
+          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn || oAuthGithubLoading}>
             Entrar
           </Button>
         </form>
       </Row>
       <Link to="/enroll">Não possui login? Inscreva-se</Link>
-      <GithubButton onClick={() => redirectToGithub()}>
-        <GithubLogo src={githubLogo} alt="github-login" />
-        <VerticalDivider></VerticalDivider>
-        Login com Github
-      </GithubButton>
+      <GithubButton onClick={() => redirectToGithub()}/>
+      {/* <GithubButton onClick={() => redirectToGithub()}> */}
       <Row></Row>
     </AuthLayout>
   );
 }
-
-const GithubLogo = styled.img`
-  height: 100%;
-`;
-
-const VerticalDivider = styled.div`
-  width: 1px;
-  height: 70%;
-  background-color: white;
-  margin: 0 5px 0 0;
-`;
-
-const GithubButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  background-color: #444444;
-  color: white;
-  padding-right: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-`;

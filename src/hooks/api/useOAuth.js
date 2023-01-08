@@ -7,11 +7,9 @@ export default function useOAuthGithub() {
     loading: oAuthGithubLoading,
     error: oAuthGithubError,
     act: oAuthGithub,
-    data: github,
   } = useAsync(oAuthApi.oAuthGithub, false);
 
   return {
-    github,
     oAuthGithub,
     oAuthGithubLoading,
     oAuthGithubError,
