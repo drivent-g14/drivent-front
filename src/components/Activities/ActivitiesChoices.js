@@ -1,32 +1,45 @@
 import styled from 'styled-components';
 import { RxEnter } from 'react-icons/rx'; 
-import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 
 export function ActivitiesChoices({ data }) {
   const [modelIonIcon, setModelIonIcon] = useState('');
   const [color, setColor] = useState('');
+  const [saveActivities, setSaveActivities] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if(data.slotsNumbers === 0) {
       setColor('#CC6666');
+      setMessage('Esgotado');
       setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
     }else{
       setColor('#078632');
+      setMessage(data.slotsNumbers + ' vagas');
       setModelIonIcon(<RxEnter color='#078632'/>);
     } 
   }, []);
 
+  function registerActivities(slots) {
+    if(slots !== 0) {
+      setColor('#078632');
+      setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
+      setMessage('Inscrito');
+      setSaveActivities(true);
+    }
+  };
+
   return (
     <>
-      <Activities>
-        <Infos>
+      <Activities saveActivities={saveActivities}>
+        <Infos saveActivities={saveActivities}>
           <h1>{data.event}</h1>
           <h2>{data.startHour} - {data.endHour}</h2>
         </Infos>
-        <IonIcon color={color}>
+        <IonIcon color={color} onClick={() => registerActivities(data.slotsNumbers)} >
           {modelIonIcon}
-          <h3>{data.slotsNumbers} vagas</h3>
+          <h3>{message}</h3>
         </IonIcon>
       </Activities>
     </>
@@ -37,7 +50,7 @@ const Activities = styled.div`
   width: 100%;
   min-height: 80px;
   padding: 10px;
-  background: #F1F1F1;
+  background: ${(props) => props.saveActivities ? '#D0FFDB' :'#F1F1F1'};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,9 +61,17 @@ const Infos = styled.div`
   display: flex;
   min-width: 200px;
   flex-direction: column;
-  row-gap: 10px;
   border-right: 1px solid #CFCFCF;
+  row-gap: 10px;
   padding-right: 15px;
+
+  ${(props) => {
+    if(props.saveActivities) {
+      return `
+       border-right: 1px solid #99E8A1;
+      `;
+    }
+  }}
 
   h1{
     color: #343434;
@@ -66,9 +87,9 @@ const Infos = styled.div`
 
 const IonIcon = styled.div`
   display: flex;
-  padding-left: 10px;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 
   h3{
     text-align: center;

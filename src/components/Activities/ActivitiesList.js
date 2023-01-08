@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import DisplaySection from '../Dashboard/Sections/DisplaySection';
 import BoxDayContainer from '../Dashboard/Containers/BoxDayContainer';
 import { useState } from 'react';
-import { RxEnter } from 'react-icons/rx'; 
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { Activities } from './Activities';
 
 export function ActivitiesList() {
