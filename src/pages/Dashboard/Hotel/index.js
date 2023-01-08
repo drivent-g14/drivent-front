@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import CardContainer from '../../../components/Dashboard/Containers/CardContainer';
-import DisplaySection from '../../../components/Dashboard/Sections/DisplaySection';
 import useHotel from '../../../hooks/api/useHotels';
 import { useGetTicket } from '../../../hooks/api/useTicket';
 import UnauthorizedScreen from '../../../components/Dashboard/Errors/UnauthorizedScreen';
-
+import { HotelsContainer } from '../../../components/HotelContainer/HotelConaitner';
 const unauthorizedMsg = Object.freeze({
   NO_PAYMENT_MSG: 'Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem.',
   ONLINE_MODALITY_MSG: 'Sua modalidade de ingresso não possui hospedagem. Prossiga para a escolha de atividades.',
@@ -52,20 +50,13 @@ export default function Hotel() {
   );
 }
 
-function HotelsContainer({ hotels }) {
-  return (
-    <DisplaySection title={'Primeiro, escolha seu hotel'}>
-      {hotels && hotels.map((data, index) => <CardContainer key={index} title={data.name} image={data.image} />)}
-    </DisplaySection>
-  );
-}
-
 const HotelsSections = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   row-gap: 32px;
+  align-items: space-between;
 `;
 
 const TitleSection = styled.p`
