@@ -3,22 +3,19 @@ import ActivitiesCard from './ActivitiesCard';
 
 export function ActivitiesLocation({ data }) {
   const { Location } = data;
-  console.log(data.data);
   return (
     <>
       <LocationAndActivities>
         <p>{Location}</p>
-        {data.data.map((data, index) => 
-          <ActivitiesCard key={index} data={data}/>
-        )}
+        <ActivitiesCard data={data.data}/>
       </LocationAndActivities>
     </>
   );
 };
 
 const LocationAndActivities = styled.div`
-  height: 391px;
-  width: 300px;
+  min-height: 391px;
+  min-width: 300px;
 
   p{
     color: #7B7B7B;
