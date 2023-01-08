@@ -17,14 +17,14 @@ export default function Activities() {
   }, [ticket]);
   
   return (
-    <ActivitiesContainer>
+    <Container>
       <TitleSection>Escolha de atividades</TitleSection>
       {activities ? <ActivitiesList/> : <UnauthorizedScreen>{message}</UnauthorizedScreen>}
-    </ActivitiesContainer>
+    </Container>
   );
 }
 
-const ActivitiesContainer = styled.div`
+const Container = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
