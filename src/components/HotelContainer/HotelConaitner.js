@@ -38,8 +38,8 @@ export function HotelsContainer({ hotels }) {
       {tapped && <DisplaySection title={'Ótimo pedida! Agora escolha seu quarto:'}>
         <BookingDisplay>
           {Array.from(Array(4).keys()).map((data, index) => <BookingButton number={100} ocupations={[ModalityOcupations.VAGUE, ModalityOcupations.VAGUE, ModalityOcupations.VAGUE]} selection={ModalitySelect.DEFAULT} />)}
-          {Array.from(Array(4).keys()).map((data, index) => <BookingButton number={101} />)}
-          {Array.from(Array(4).keys()).map((data, index) => <BookingButton number={102} />)}
+          {Array.from(Array(4).keys()).map((data, index) => <BookingButton number={101} ocupations={[ModalityOcupations.VAGUE, ModalityOcupations.VAGUE, ModalityOcupations.RESERVED]} />)}
+          {Array.from(Array(4).keys()).map((data, index) => <BookingButton number={102} ocupations={[ModalityOcupations.VAGUE, ModalityOcupations.RESERVED, ModalityOcupations.RESERVED]}/>)}
         </BookingDisplay>
       </DisplaySection>
       }

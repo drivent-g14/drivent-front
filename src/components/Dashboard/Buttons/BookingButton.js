@@ -15,7 +15,7 @@ export default function BookingButton({
   function changeColor(selection) {
     if(selection === 'BUSY') return '#CECECE';
     if(selection === 'SELECT') return '#FFEED2';
-    if(selection === 'DEFAULT') return '#FFFFFF';
+    if(selection === 'DEFAULT') return '#FFFFFF ';
   }
   return (
     <BookingButtonStyle height ={height} width={width} color = {changeColor(selection)}>
