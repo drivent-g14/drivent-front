@@ -8,9 +8,11 @@ import * as useActivities from '../../hooks/api/useActivities';
 export function ActivitiesList() {
   const { getActivities } = useActivities.listActivities();
   const [activitiesFiltered, setActivitiesFiltered] = useState([]);
+  const [listActivities, setListActivities] = useState([]);
 
   useEffect(async() => {
     const listActivities = await getActivities();
+    setListActivities(listActivities);
     const activitiesMap = listActivities.map(value => value.day);
     setActivitiesFiltered([...activitiesMap.filter((item, index) => activitiesMap.indexOf(item) === index)]);
   }, []);
@@ -33,10 +35,10 @@ export function ActivitiesList() {
             onClick={() => { setChoicedDay(index); setSetModality(false);}}/> 
         )}
       </ActivityDays>
-      {/* <DisplaySection isActive={choicedDay === 0}>
-        <Activities array={activitiesArray[0]}/>
+      <DisplaySection isActive={choicedDay === 0}>
+        <Activities array={listActivities.filter(value => value.day === 'Sexta, 22/10')}/>
       </DisplaySection>
-      <DisplaySection isActive={choicedDay === 1}>
+      {/* <DisplaySection isActive={choicedDay === 1}>
         <Activities array={activitiesArray[1]}/>
       </DisplaySection>
       <DisplaySection isActive={choicedDay === 2}>

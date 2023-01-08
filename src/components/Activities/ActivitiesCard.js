@@ -2,15 +2,19 @@ import styled from 'styled-components';
 import { ActivitiesChoices } from './ActivitiesChoices';
 
 export default function ActivitiesCard({ data }) {
-  return (
-    <>
-      <ActivitiesInfos>  
-        {data.map((data, index) => 
-          <ActivitiesChoices key={index} data={data}/>
-        )}
-      </ActivitiesInfos>
-    </>
-  );
+  if(data) {
+    return (
+      <>
+        <ActivitiesInfos>  
+          {data.map((data, index) => 
+            <ActivitiesChoices key={index} data={data}/>
+          )}
+        </ActivitiesInfos>
+      </>
+    );
+  }else {
+    return <></>;
+  }
 };
 
 const ActivitiesInfos = styled.div`

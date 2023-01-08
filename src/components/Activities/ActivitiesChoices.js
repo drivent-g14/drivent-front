@@ -10,13 +10,13 @@ export function ActivitiesChoices({ data }) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if(data.slotsNumbers === 0) {
+    if(data.slots === 0) {
       setColor('#CC6666');
       setMessage('Esgotado');
       setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
     }else{
       setColor('#078632');
-      setMessage(data.slotsNumbers + ' vagas');
+      setMessage(data.slots + ' vagas');
       setModelIonIcon(<RxEnter color='#078632'/>);
     } 
   }, []);
@@ -34,10 +34,10 @@ export function ActivitiesChoices({ data }) {
     <>
       <Activities saveActivities={saveActivities}>
         <Infos saveActivities={saveActivities}>
-          <h1>{data.event}</h1>
-          <h2>{data.startHour} - {data.endHour}</h2>
+          <h1>{data.name}</h1>
+          <h2>{data.startsAt} - {data.endsAt}</h2>
         </Infos>
-        <IonIcon color={color} onClick={() => registerActivities(data.slotsNumbers)} >
+        <IonIcon color={color} onClick={() => registerActivities(data.slots)} >
           {modelIonIcon}
           <h3>{message}</h3>
         </IonIcon>

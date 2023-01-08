@@ -1,13 +1,23 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ActivitiesCard from './ActivitiesCard';
 
-export function ActivitiesLocation({ data }) {
-  const { Location } = data;
+export function ActivitiesLocation({ data, array }) {
+  const [arrayCards, setArrayCards] = useState();
+
+  useEffect(() => {
+    if(data === 'Auditório Principal') {
+      setArrayCards(array.filter(value => value.Location.name === 'Auditório Principal'));
+    }else if(data === 'Auditório Lateral') {
+      setArrayCards(array.filter(value => value.Location.name === 'Auditório Lateral'));
+    }
+  }, []);
+
   return (
     <>
       <LocationAndActivities>
-        <p>{Location}</p>
-        <ActivitiesCard data={data.data}/>
+        <p>{data}</p>
+        <ActivitiesCard data={arrayCards}/>
       </LocationAndActivities>
     </>
   );
