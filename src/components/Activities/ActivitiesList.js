@@ -4,7 +4,7 @@ import BoxDayContainer from '../Dashboard/Containers/BoxDayContainer';
 import { useState } from 'react';
 import { RxEnter } from 'react-icons/rx'; 
 import { AiOutlineCloseCircle } from 'react-icons/ai';
-import { ActivitiesLocation } from './ActivitiesLocation';
+import { Activities } from './Activities';
 
 export function ActivitiesList() {
   const activitiesArray = [
@@ -12,47 +12,47 @@ export function ActivitiesList() {
       date: 'Sexta, 22/10',
       data: [
         {
-          Room: 'Auditório Principal',
+          Location: 'Auditório Principal',
           data: [
             {
               event: 'Minecraft: montando o PC ideal',
-              duration: 1,
               startHour: '09:00',
+              endHour: '10:00',
               slotsNumbers: 27,
 
             },
             {
               event: 'LoL: montando o PC ideal',
-              duration: 1,
               startHour: '10:00',
+              endHour: '11:00',
               slotsNumbers: 0,
             },
           ],
         },
         {
-          Room: 'Auditório Lateral',
+          Location: 'Auditório Lateral',
           data: [
             {
               event: 'CS-GO: montando o PC ideal',
-              duration: 1,
               startHour: '11:00',
+              endHour: '12:00',
               slotsNumbers: 37,
             },
             {
               event: 'TFT: montando o PC ideal',
-              duration: 1,
               startHour: '12:00',
+              endHour: '13:00',
               slotsNumbers: 0,
             },
           ],
         },
         {
-          Room: 'Sala de Workshop',
+          Location: 'Sala de Workshop',
           data: [
             {
               event: 'RDR 2: montando o PC ideal',
-              duration: 2,
               startHour: '13:00',
+              endHour: '15:00',
               slotsNumbers: 27,
             },
           ],
@@ -84,7 +84,7 @@ export function ActivitiesList() {
         )}
       </ActivityDays>
       <DisplaySection isActive={choicedDay === 0}>
-        <ActivitiesLocation />
+        <Activities array={activitiesArray[0]}/>
       </DisplaySection>
     </>
   );
