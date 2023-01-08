@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "http://localhost:3000/sign-in?code=a01bd7ce16fb74a31923",
+            "request": "launch",
+            "url": "http://localhost:3000/sign-in?code=a01bd7ce16fb74a31923"
+        }
+    ]
+}
