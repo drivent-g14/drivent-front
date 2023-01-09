@@ -10,6 +10,7 @@ import styled from 'styled-components';
 export function PaymentSection({ ticket }) {
   const { ticketTypes } = useTicketType();
   const [priceAtEvent, setPriceAtEvent] = useState(0);
+  const [nameAtEvent, setNameAtEvent] = useState(0);
   const [paymentDone, setPaymentDone] = useState(false);
   const selectedTicket = ticket.TicketType;
   const ticketPaid = ticket.status === 'PAID' || paymentDone;
@@ -17,6 +18,14 @@ export function PaymentSection({ ticket }) {
   useEffect(() => {
     if (ticketTypes) {
       ticketTypes.map((ticket) => (ticket.name.includes('basePrice') ? setPriceAtEvent(ticket.price) : null));
+    }
+    if(selectedTicket.name === 'Sem Hotel + Presencial' || selectedTicket.name === 'Com Hotel + Presencial') {
+      setPriceAtEvent(250);
+      if(selectedTicket.name === 'Sem Hotel + Presencial') setNameAtEvent('Presencial + Sem Hotel');
+      else setNameAtEvent('Presencial + Com Hotel');
+    }else if(selectedTicket.name === 'Online - mask') {
+      setPriceAtEvent(100);
+      setNameAtEvent(selectedTicket.name.split('-')[0]);
     }
   }, [ticketTypes]);
 
@@ -31,7 +40,7 @@ export function PaymentSection({ ticket }) {
           width={290}
           height={108}
           isTapped={true}
-          description={selectedTicket.name}
+          description={nameAtEvent}
           value={`R$ ${selectedTicket.isRemote ? selectedTicket.price : priceAtEvent + selectedTicket.price}`}
         />
       </DisplaySection>

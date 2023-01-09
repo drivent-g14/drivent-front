@@ -51,7 +51,7 @@ const MuiContainer = styled(Box)`
 const CardContent = styled.div`
   display: flex;
   height: 100%;
-  width: 100%
+  width: 100%;
   column-gap: 8px;
   row-gap: 16px;
   flex-direction: column;

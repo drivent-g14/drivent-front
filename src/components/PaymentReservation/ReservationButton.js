@@ -10,7 +10,7 @@ export default function ReserveButton({ ticketType, hospitalityIndex = '', price
   return (
     <DisplaySection
       title={`Fechado! O total ficou em R$ ${
-        ticketType.isRemote ? ticketType.price : priceAtEvent + ticketType.price
+        ticketType.isRemote ? ticketType.price : priceAtEvent
       }. Agora é só confirmar`}
       isActive={isActive}
     >
