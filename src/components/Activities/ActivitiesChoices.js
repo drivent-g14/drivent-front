@@ -3,6 +3,7 @@ import { RxEnter } from 'react-icons/rx';
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import * as useActivities from '../../hooks/api/useActivities';
+import { toast } from 'react-toastify';
 
 export function ActivitiesChoices({ data }) {
   const { createActivities } = useActivities.addActivities();
@@ -15,24 +16,36 @@ export function ActivitiesChoices({ data }) {
 
   useEffect(async() => {
     const list = await getActivitiesById();
-    list.map((value) => {
-      if(data.id === value.activitiesId) {
-        setColor('#078632');
-        setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
-        setMessage('Inscrito');
-        setSaveActivities(true);
-      }else{
-        if(data.slots === 0) {
-          setColor('#CC6666');
-          setMessage('Esgotado');
-          setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
-        }else{
+    if(list.length !== 0) {
+      list.map((value) => {
+        if(data.id === value.activitiesId) {
           setColor('#078632');
-          setMessage(data.slots + ' vagas');
-          setModelIonIcon(<RxEnter color='#078632'/>);
-        } 
-      }
-    });
+          setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
+          setMessage('Inscrito');
+          setSaveActivities(true);
+        }else{
+          if(data.slots === 0) {
+            setColor('#CC6666');
+            setMessage('Esgotado');
+            setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
+          }else{
+            setColor('#078632');
+            setMessage(data.slots + ' vagas');
+            setModelIonIcon(<RxEnter color='#078632'/>);
+          } 
+        }
+      });
+    }else{
+      if(data.slots === 0) {
+        setColor('#CC6666');
+        setMessage('Esgotado');
+        setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
+      }else{
+        setColor('#078632');
+        setMessage(data.slots + ' vagas');
+        setModelIonIcon(<RxEnter color='#078632'/>);
+      } 
+    }
   }, []);
 
   async function registerActivities(slots) {
@@ -43,8 +56,10 @@ export function ActivitiesChoices({ data }) {
         setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
         setMessage('Inscrito');
         setSaveActivities(true);
+        toast('Inscrição realizada com sucesso!');
       } catch (error) {
-        console.log(error);
+        if(error.response.status === 409) toast('Você já está inscrito em uma atividade no horário!');
+        if(error.response.status === 404) toast('Não foi possível se inscrever na atividade, verifique seus dados!');
       }
     }
   };

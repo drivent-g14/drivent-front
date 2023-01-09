@@ -16,7 +16,6 @@ export function ActivitiesList() {
     const activitiesMap = listActivities.map(value => value.day);
     setActivitiesFiltered([...activitiesMap.filter((item, index) => activitiesMap.indexOf(item) === index)]);
   }, []);
-
   const [choicedDay, setChoicedDay] = useState('');
   const [setModality, setSetModality] = useState(true);
 
