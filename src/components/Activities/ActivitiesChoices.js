@@ -15,24 +15,26 @@ export function ActivitiesChoices({ data }) {
 
   useEffect(async() => {
     const list = await getActivitiesById();
-    list.map((value) => {
-      if(data.id === value.activitiesId) {
-        setColor('#078632');
-        setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
-        setMessage('Inscrito');
-        setSaveActivities(true);
-      }
-    });
-
-    if(data.slots === 0) {
-      setColor('#CC6666');
-      setMessage('Esgotado');
-      setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
+    if(list.length !== 0) {
+      list.map((value) => {
+        if(data.id === value.activitiesId) {
+          setColor('#078632');
+          setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
+          setMessage('Inscrito');
+          setSaveActivities(true);
+        }
+      });
     }else{
-      setColor('#078632');
-      setMessage(data.slots + ' vagas');
-      setModelIonIcon(<RxEnter color='#078632'/>);
-    } 
+      if(data.slots === 0) {
+        setColor('#CC6666');
+        setMessage('Esgotado');
+        setModelIonIcon(<AiOutlineCloseCircle color='#CC6666'/>);
+      }else{
+        setColor('#078632');
+        setMessage(data.slots + ' vagas');
+        setModelIonIcon(<RxEnter color='#078632'/>);
+      } 
+    }
   }, []);
 
   async function registerActivities(slots) {
