@@ -2,14 +2,28 @@ import styled from 'styled-components';
 import { RxEnter } from 'react-icons/rx'; 
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
+import * as useActivities from '../../hooks/api/useActivities';
 
 export function ActivitiesChoices({ data }) {
+  const { createActivities } = useActivities.addActivities();
+  const { getActivitiesById } = useActivities.listActivitiesById();
+
   const [modelIonIcon, setModelIonIcon] = useState('');
   const [color, setColor] = useState('');
   const [saveActivities, setSaveActivities] = useState(false);
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
+  useEffect(async() => {
+    const list = await getActivitiesById();
+    list.map((value) => {
+      if(data.id === value.activitiesId) {
+        setColor('#078632');
+        setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
+        setMessage('Inscrito');
+        setSaveActivities(true);
+      }
+    });
+
     if(data.slots === 0) {
       setColor('#CC6666');
       setMessage('Esgotado');
@@ -21,12 +35,17 @@ export function ActivitiesChoices({ data }) {
     } 
   }, []);
 
-  function registerActivities(slots) {
+  async function registerActivities(slots) {
     if(slots !== 0) {
-      setColor('#078632');
-      setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
-      setMessage('Inscrito');
-      setSaveActivities(true);
+      try {
+        await createActivities(data.id);
+        setColor('#078632');
+        setModelIonIcon(<AiOutlineCheckCircle color='#078632'/>);
+        setMessage('Inscrito');
+        setSaveActivities(true);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

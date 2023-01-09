@@ -9,3 +9,22 @@ export async function getActivities(token) {
   
   return response.data;
 };
+
+export async function createActivities(body, token) {
+  const response = await api.post(`/activities/${body}`, {}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  
+  return response.data;
+}
+export async function getActivitiesById(token) {
+  const response = await api.get('/activities/list', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  
+  return response.data;
+};

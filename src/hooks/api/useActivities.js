@@ -18,3 +18,35 @@ export function listActivities() {
     getActivities,
   };
 };
+export function addActivities() {
+  const token = useToken();
+  const {
+    data: activities,
+    loading: activitiesLoading,
+    error: activitiesError,
+    act: createActivities,
+  } = useAsync((data) => activitiesApi.createActivities(data, token), false);
+
+  return {
+    activities,
+    activitiesLoading,
+    activitiesError,
+    createActivities,
+  };
+}
+export function listActivitiesById() {
+  const token = useToken();
+  const {
+    data: activities,
+    loading: activitiesLoading,
+    error: activitiesError,
+    act: getActivitiesById,
+  } = useAsync(() => activitiesApi.getActivitiesById(token));
+  
+  return {
+    activities,
+    activitiesLoading,
+    activitiesError,
+    getActivitiesById,
+  };
+};

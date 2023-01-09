@@ -12,7 +12,7 @@ export function ActivitiesList() {
 
   useEffect(async() => {
     const listActivities = await getActivities();
-    setListActivities(listActivities);
+    setListActivities(listActivities.sort((a, b) => a.id - b.id));
     const activitiesMap = listActivities.map(value => value.day);
     setActivitiesFiltered([...activitiesMap.filter((item, index) => activitiesMap.indexOf(item) === index)]);
   }, []);
@@ -38,12 +38,12 @@ export function ActivitiesList() {
       <DisplaySection isActive={choicedDay === 0}>
         <Activities array={listActivities.filter(value => value.day === 'Sexta, 22/10')}/>
       </DisplaySection>
-      {/* <DisplaySection isActive={choicedDay === 1}>
-        <Activities array={activitiesArray[1]}/>
+      <DisplaySection isActive={choicedDay === 1}>
+        <Activities array={listActivities.filter(value => value.day === 'Sábado, 23/10')}/>
       </DisplaySection>
       <DisplaySection isActive={choicedDay === 2}>
-        <Activities array={activitiesArray[2]}/>
-      </DisplaySection> */}
+        <Activities array={listActivities.filter(value => value.day === 'Domingo, 24/10')}/>
+      </DisplaySection>
     </>
   );
 };

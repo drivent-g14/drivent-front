@@ -10,6 +10,8 @@ export function ActivitiesLocation({ data, array }) {
       setArrayCards(array.filter(value => value.Location.name === 'Auditório Principal'));
     }else if(data === 'Auditório Lateral') {
       setArrayCards(array.filter(value => value.Location.name === 'Auditório Lateral'));
+    }else if(data === 'Sala de Workshop') {
+      setArrayCards(array.filter(value => value.Location.name === 'Sala de Workshop'));
     }
   }, []);
 
