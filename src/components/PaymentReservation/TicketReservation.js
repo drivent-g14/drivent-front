@@ -30,6 +30,7 @@ export function TicketReservation() {
 
   function checkAndSetModality(index, type) {
     if (modalityIndex !== index) {
+      setPriceAtEvent(type.price);
       setModalityIndex(index);
       setTicketType(type);
       setHospitalityIndex('');
@@ -40,6 +41,7 @@ export function TicketReservation() {
   }
 
   function checkHospitalityIndex(index, type) {
+    if(modalityIndex === 0) setPriceAtEvent(type.price + modalityOpt[0].price);
     if (hospitalityIndex !== index) {
       setHospitalityIndex(index);
       setTicketType(type);
@@ -69,7 +71,7 @@ export function TicketReservation() {
             {atEventOpt.map((data, index) => (
               <BoxContainer
                 key={index}
-                description={data.name}
+                description={data.name.split('+')[0]}
                 value={`+ R$ ${data.price}`}
                 isTapped={hospitalityIndex === index}
                 onClick={() => checkHospitalityIndex(index, data)}
